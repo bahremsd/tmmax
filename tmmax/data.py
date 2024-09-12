@@ -143,6 +143,9 @@ def interpolate_nk(material_name: str) -> Callable[[float], complex]:
 def add_material_to_nk_database(wavelength_arr, refractive_index_arr, extinction_coeff_arr, material_name=''):
 
 
+    if not all(isinstance(arr, jnp.ndarray) for arr in [wavelength_arr, refractive_index_arr, extinction_coeff_arr]):
+        raise TypeError("All input arrays must be of type jax.numpy.ndarray")
+
     if not all(len(arr) == len(wavelength_arr) for arr in [refractive_index_arr, extinction_coeff_arr]):
         raise ValueError("All input arrays must have the same length")
 

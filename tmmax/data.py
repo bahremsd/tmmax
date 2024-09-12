@@ -11,7 +11,16 @@ import warnings # Importing the warnings module to handle warnings in the code
 
 @lru_cache(maxsize=32)
 def load_nk_data(material_name: str = '') -> Union[jnp.ndarray, None]:
+    """
+    Load the refractive index (n) and extinction coefficient (k) data for a given material: (n + 1j * k).
 
+    This function fetches wavelength-dependent refractive index (n) and extinction coefficient (k) 
+    data for a specified material. The data is read from a CSV file located in the 'nk_data/' directory. 
+    The CSV file should be named after the material, e.g., 'Si.csv', and include three columns: wavelength (in micrometers), 
+    refractive index (n), and extinction coefficient (k). These parameters are crucial for optical simulations, 
+    allowing the user to work with materials' optical properties over a range of wavelengths.
+
+    """
     # Check that the material name is not an empty string
     if not material_name:  
         raise ValueError("Material name cannot be an empty string.")  # Raise an error if no material is provided

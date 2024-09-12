@@ -46,7 +46,14 @@ def _fresnel_p(_first_layer_n: Union[float, jnp.ndarray],
                _second_layer_n: Union[float, jnp.ndarray],
                _first_layer_theta: Union[float, jnp.ndarray], 
                _second_layer_theta: Union[float, jnp.ndarray]) -> Tuple[jnp.ndarray, jnp.ndarray]:
+    """
+    This function calculates the Fresnel reflection (r_p) and transmission (t_p) coefficients 
+    for p-polarized light at the interface between two different media. It uses the refractive indices
+    of the two media (_first_layer_n and _second_layer_n) and the incident and transmitted angles
+    (_first_layer_theta and _second_layer_theta) to compute these values.
 
+
+    """
 
     # Calculate the reflection coefficient for p-polarized light (r_p)
     # This equation is based on the Fresnel equations for p-polarization, where 

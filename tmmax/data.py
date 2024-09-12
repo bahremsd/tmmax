@@ -125,6 +125,8 @@ def interpolate_nk(material_name: str) -> Callable[[float], complex]:
         """
         Compute the complex refractive index for a given wavelength.
 
+        Args:
+            wavelength (float): Wavelength in meters.
 
         """
         n = compute_refractive_index(wavelength)  # Get the refractive index at the given wavelength

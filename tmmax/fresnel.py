@@ -58,6 +58,10 @@ def _fresnel_p(_first_layer_n: Union[float, jnp.ndarray],
         _first_layer_theta: Incident angle (in radians) in the first medium (can be float or ndarray).
         _second_layer_theta: Transmitted angle (in radians) in the second medium (can be float or ndarray).
 
+    Returns:
+        Tuple[jnp.ndarray, jnp.ndarray]: A tuple containing two arrays:
+            - r_p: The reflection coefficient for p-polarized light.
+            - t_p: The transmission coefficient for p-polarized light.
     """
 
     # Calculate the reflection coefficient for p-polarized light (r_p)

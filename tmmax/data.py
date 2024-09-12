@@ -143,6 +143,9 @@ def interpolate_nk(material_name: str) -> Callable[[float], complex]:
 def add_material_to_nk_database(wavelength_arr, refractive_index_arr, extinction_coeff_arr, material_name=''):
 
 
+    if not all(len(arr) == len(wavelength_arr) for arr in [refractive_index_arr, extinction_coeff_arr]):
+        raise ValueError("All input arrays must have the same length")
+
 
     if not material_name.strip():
         raise ValueError("Material name cannot be an empty string")

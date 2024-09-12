@@ -21,7 +21,10 @@ def _fresnel_s(_first_layer_n: Union[float, jnp.ndarray],
         _second_layer_theta (Union[float, jnp.ndarray]): Angle of refraction in the second layer (in radians). 
             Can be a float or an array.
 
-
+    Returns:
+        Tuple[jnp.ndarray, jnp.ndarray]: A tuple containing two jax.numpy arrays:
+            - r_s: The Fresnel reflection coefficient for s-polarized light.
+            - t_s: The Fresnel transmission coefficient for s-polarized light.
     """
     
     # Calculate the reflection coefficient for s-polarized light using Fresnel's equations.

@@ -62,3 +62,24 @@ def load_nk_data(material_name: str = '') -> Union[jnp.ndarray, None]:
         raise ValueError(f"The file for material '{material_name}' is empty or not in the expected format.")
     
     return data  # Return the loaded data as a JAX array
+
+
+
+def interpolate_1d(x: jnp.ndarray, y: jnp.ndarray) -> Callable[[float], float]:
+
+    def interpolate(x_val: float) -> float:
+
+        idx = jnp.searchsorted(x, x_val, side='right') - 1
+        idx = jnp.clip(idx, 0, x.shape[0] - 2)
+        
+
+        x_i, x_ip1 = x[idx], x[idx + 1]
+        y_i, y_ip1 = y[idx], y[idx + 1]
+        
+        slope = (y_ip1 - y_i) / (x_ip1 - x_i)
+        
+        return y_i + slope * (x_val - x_i)
+
+    return interpolate  # Return the interpolation function to be used later
+
+

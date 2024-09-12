@@ -66,7 +66,18 @@ def load_nk_data(material_name: str = '') -> Union[jnp.ndarray, None]:
 
 
 def interpolate_1d(x: jnp.ndarray, y: jnp.ndarray) -> Callable[[float], float]:
-
+    """
+    Creates a 1D linear interpolation function based on the provided x and y arrays.
+    
+    This function returns a callable that performs linear interpolation on the input data points (x, y).
+    Given an x value, it finds the corresponding y value by assuming a straight line between two closest points 
+    in the x array and using the equation of the line. 
+    
+    Args:
+        x (jnp.ndarray): Array of x values (independent variable). It must be sorted in ascending order.
+        y (jnp.ndarray): Array of y values (dependent variable). It should have the same length as the x array.
+    
+    """
     
     @jit  # Just-In-Time compilation using JAX, speeds up the execution by compiling the function once.
     def interpolate(x_val: float) -> float:

@@ -20,6 +20,23 @@ def load_nk_data(material_name: str = '') -> Union[jnp.ndarray, None]:
     refractive index (n), and extinction coefficient (k). These parameters are crucial for optical simulations, 
     allowing the user to work with materials' optical properties over a range of wavelengths.
 
+    Args:
+        material_name (str): The name of the material for which the data is to be loaded. 
+                             This must not be an empty string, and the corresponding CSV file 
+                             must exist in the 'nk_data/' directory.
+
+    Returns:
+        jnp.ndarray: A 2D array containing the wavelength (first column), 
+                     refractive index (n) (second column), and extinction coefficient (k) (third column).
+                     Each row corresponds to a different wavelength.
+                     
+        None: If the function fails due to any raised exception or if the CSV file is empty, 
+              it will return None.
+
+    Raises:
+        ValueError: If the material name is an empty string.
+        FileNotFoundError: If the file for the given material does not exist in the 'nk_data/' folder.
+        IOError: If there's an issue reading or parsing the file.
     """
     # Check that the material name is not an empty string
     if not material_name:  

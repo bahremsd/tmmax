@@ -113,12 +113,12 @@ def interpolate_nk(material_name: str) -> Callable[[float], complex]:
         Callable[[float], complex]: A function that takes a wavelength (in meters) and 
                                     returns the complex refractive index.
     """
-    nk_data = load_nk_data(material_name) 
-    wavelength, refractive_index, extinction_coefficient = nk_data.T 
+    nk_data = load_nk_data(material_name)  # Load the nk data for the specified material
+    wavelength, refractive_index, extinction_coefficient = nk_data.T  # Transpose to get columns as variables
 
-
-    compute_refractive_index = interpolate_1d(wavelength * 1e-6, refractive_index)
-    compute_extinction_coefficient = interpolate_1d(wavelength * 1e-6, extinction_coefficient) 
+    # Interpolate refractive index and extinction coefficient
+    compute_refractive_index = interpolate_1d(wavelength * 1e-6, refractive_index)  # Convert wavelength to meters for interpolation
+    compute_extinction_coefficient = interpolate_1d(wavelength * 1e-6, extinction_coefficient)  # Convert wavelength to meters for interpolation
 
 
     def compute_nk(wavelength: float) -> complex:

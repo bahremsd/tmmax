@@ -144,6 +144,9 @@ def add_material_to_nk_database(wavelength_arr, refractive_index_arr, extinction
 
 
 
+    if not material_name.strip():
+        raise ValueError("Material name cannot be an empty string")
+
     if jnp.any(extinction_coeff_arr > 20):
         warnings.warn("Extinction coefficient being greater than 20 indicates that the material is almost opaque. "
                       "In the Transfer Matrix Method, to avoid the coefficients going to 0 and the gradient being zero, "

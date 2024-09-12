@@ -106,6 +106,8 @@ def interpolate_nk(material_name: str) -> Callable[[float], complex]:
     Load the nk data for a given material and return a callable function that computes
     the complex refractive index for any wavelength.
 
+    Args:
+        material_name (str): Name of the material to load the nk data for.
 
 
     """

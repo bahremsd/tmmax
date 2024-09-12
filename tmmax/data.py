@@ -77,6 +77,9 @@ def interpolate_1d(x: jnp.ndarray, y: jnp.ndarray) -> Callable[[float], float]:
         x (jnp.ndarray): Array of x values (independent variable). It must be sorted in ascending order.
         y (jnp.ndarray): Array of y values (dependent variable). It should have the same length as the x array.
     
+    Returns:
+        Callable[[float], float]: A function that, when provided with a single float x value, returns the corresponding
+        interpolated float y value based on the linear interpolation.
     """
     
     @jit  # Just-In-Time compilation using JAX, speeds up the execution by compiling the function once.

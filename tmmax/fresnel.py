@@ -48,11 +48,18 @@ def _fresnel_p(_first_layer_n: Union[float, jnp.ndarray],
                _second_layer_theta: Union[float, jnp.ndarray]) -> Tuple[jnp.ndarray, jnp.ndarray]:
 
 
+    # Calculate the reflection coefficient for p-polarized light (r_p)
+    # This equation is based on the Fresnel equations for p-polarization, where 
+    # r_p is the ratio of the reflected and incident electric field amplitudes for p-polarized light.
     r_p = ((_second_layer_n * jnp.cos(_first_layer_theta) - _first_layer_n * jnp.cos(_second_layer_theta)) /
            (_second_layer_n * jnp.cos(_first_layer_theta) + _first_layer_n * jnp.cos(_second_layer_theta)))
 
-
+    # Calculate the transmission coefficient for p-polarized light (t_p)
+    # This equation is also derived from the Fresnel equations for p-polarization.
+    # t_p represents the ratio of the transmitted and incident electric field amplitudes.
     t_p = (2 * _first_layer_n * jnp.cos(_first_layer_theta) /
            (_second_layer_n * jnp.cos(_first_layer_theta) + _first_layer_n * jnp.cos(_second_layer_theta)))
 
+    # Return the reflection and transmission coefficients as a tuple of jnp arrays
+    # Both r_p and t_p are essential for understanding how light interacts with different layers.
     return jnp.array([r_p, t_p])

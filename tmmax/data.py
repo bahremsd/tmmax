@@ -142,30 +142,46 @@ def interpolate_nk(material_name: str) -> Callable[[float], complex]:
 
 def add_material_to_nk_database(wavelength_arr, refractive_index_arr, extinction_coeff_arr, material_name=''):
 
-
+    
+    # Validate input types
+    # Check if all input arrays are of type jax.numpy.ndarray
     if not all(isinstance(arr, jnp.ndarray) for arr in [wavelength_arr, refractive_index_arr, extinction_coeff_arr]):
         raise TypeError("All input arrays must be of type jax.numpy.ndarray")
 
+    # Ensure all arrays have the same length
+    # Check if the length of refractive_index_arr and extinction_coeff_arr match wavelength_arr
     if not all(len(arr) == len(wavelength_arr) for arr in [refractive_index_arr, extinction_coeff_arr]):
         raise ValueError("All input arrays must have the same length")
 
-
+    # Validate material name
+    # Ensure that the material name is not an empty string
     if not material_name.strip():
         raise ValueError("Material name cannot be an empty string")
 
+    # Check for extinction coefficients greater than 20
+    # Warn and threshold extinction coefficients greater than 20 to 20
     if jnp.any(extinction_coeff_arr > 20):
         warnings.warn("Extinction coefficient being greater than 20 indicates that the material is almost opaque. "
                       "In the Transfer Matrix Method, to avoid the coefficients going to 0 and the gradient being zero, "
                       "extinction coefficients greater than 20 have been thresholded to 20.", UserWarning)
         extinction_coeff_arr = jnp.where(extinction_coeff_arr > 20, 20, extinction_coeff_arr)
 
+    # Ensure the data is on the correct device
+    # Move arrays to the appropriate device (e.g., GPU) for processing
     wavelength_arr, refractive_index_arr, extinction_coeff_arr = map(device_put, [wavelength_arr, refractive_index_arr, extinction_coeff_arr])
 
+    # Combine the arrays into a single 2D array
+    # Stack arrays as columns into a 2D array for saving
     data = jnp.column_stack((wavelength_arr, refractive_index_arr, extinction_coeff_arr))
 
+    # Construct the file path
+    # Create a file path for saving the data based on the material name
     path = os.path.join('nk_data', f'{material_name}.csv')
-
+    
+    # Save the file with a header
+    # Convert the jax.numpy array to a numpy array for file saving and write to CSV
     np.savetxt(path, np.asarray(data), delimiter=',', header='wavelength_in_um,n,k', comments='')
     
-
+    # Provide feedback on file creation
+    # Inform the user whether the file was created or recreated successfully
     print(f"'{os.path.basename(path)}' {'recreated' if os.path.exists(path) else 'created'} successfully.")

@@ -25,13 +25,6 @@ def load_nk_data(material_name: str = '') -> Union[jnp.ndarray, None]:
                              This must not be an empty string, and the corresponding CSV file 
                              must exist in the 'nk_data/' directory.
 
-    Returns:
-        jnp.ndarray: A 2D array containing the wavelength (first column), 
-                     refractive index (n) (second column), and extinction coefficient (k) (third column).
-                     Each row corresponds to a different wavelength.
-                     
-        None: If the function fails due to any raised exception or if the CSV file is empty, 
-              it will return None.
 
     Raises:
         ValueError: If the material name is an empty string.

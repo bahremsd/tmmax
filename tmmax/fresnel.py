@@ -5,7 +5,15 @@ def _fresnel_s(_first_layer_n: Union[float, jnp.ndarray],
                _second_layer_n: Union[float, jnp.ndarray],
                _first_layer_theta: Union[float, jnp.ndarray], 
                _second_layer_theta: Union[float, jnp.ndarray]) -> Tuple[jnp.ndarray, jnp.ndarray]:
+    """
+    This function calculates the Fresnel reflection (r_s) and transmission (t_s) coefficients 
+    for s-polarized light (electric field perpendicular to the plane of incidence) at the interface 
+    between two materials. The inputs are the refractive indices and the angles of incidence and 
+    refraction for the two layers.
 
+
+
+    """
     
     # Calculate the reflection coefficient for s-polarized light using Fresnel's equations.
     # The formula: r_s = (n1 * cos(theta1) - n2 * cos(theta2)) / (n1 * cos(theta1) + n2 * cos(theta2))

@@ -24,5 +24,9 @@ def load_nk_data(material_name: str = '') -> Union[jnp.ndarray, None]:
         # If an error occurs during file reading or conversion, raise an IOError
         raise IOError(f"An error occurred while loading data for '{material_name}': {e}")
     
-
+    # Check if the file is empty or doesn't contain valid data
+    if data.size == 0:  
+        # Raise an error if the data array is empty or incorrectly formatted
+        raise ValueError(f"The file for material '{material_name}' is empty or not in the expected format.")
+    
     return data  # Return the loaded data as a JAX array

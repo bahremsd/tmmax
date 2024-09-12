@@ -70,20 +70,20 @@ def interpolate_1d(x: jnp.ndarray, y: jnp.ndarray) -> Callable[[float], float]:
     
     @jit  # Just-In-Time compilation using JAX, speeds up the execution by compiling the function once.
     def interpolate(x_val: float) -> float:
-
+        # Find the index where x_val would fit in x to maintain the sorted order
         idx = jnp.searchsorted(x, x_val, side='right') - 1
-
+        # Ensure idx is within valid bounds (0 to len(x)-2) to avoid out-of-bounds errors
         idx = jnp.clip(idx, 0, x.shape[0] - 2)
         
-
+        # Retrieve the two nearest x values, x_i and x_{i+1}, that surround x_val
         x_i, x_ip1 = x[idx], x[idx + 1]
-
+        # Retrieve the corresponding y values, y_i and y_{i+1}, at those x positions
         y_i, y_ip1 = y[idx], y[idx + 1]
         
-
+        # Calculate the slope of the line between (x_i, y_i) and (x_{i+1}, y_{i+1})
         slope = (y_ip1 - y_i) / (x_ip1 - x_i)
         
-
+        # Interpolate the y value using the slope formula: y = y_i + slope * (x_val - x_i)
         return y_i + slope * (x_val - x_i)
 
     return interpolate  # Return the interpolation function to be used later

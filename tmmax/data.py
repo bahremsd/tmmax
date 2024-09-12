@@ -12,6 +12,9 @@ import warnings # Importing the warnings module to handle warnings in the code
 @lru_cache(maxsize=32)
 def load_nk_data(material_name: str = '') -> Union[jnp.ndarray, None]:
 
+    # Check that the material name is not an empty string
+    if not material_name:  
+        raise ValueError("Material name cannot be an empty string.")  # Raise an error if no material is provided
 
     # Construct the file path and check if the file exists
     file_path = os.getcwd() + "/" + os.path.join('nk_data', f'{material_name}.csv')  # Create the full path to the file

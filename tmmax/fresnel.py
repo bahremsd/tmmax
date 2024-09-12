@@ -52,6 +52,11 @@ def _fresnel_p(_first_layer_n: Union[float, jnp.ndarray],
     of the two media (_first_layer_n and _second_layer_n) and the incident and transmitted angles
     (_first_layer_theta and _second_layer_theta) to compute these values.
 
+    Args:
+        _first_layer_n: Refractive index of the first medium (can be float or ndarray).
+        _second_layer_n: Refractive index of the second medium (can be float or ndarray).
+        _first_layer_theta: Incident angle (in radians) in the first medium (can be float or ndarray).
+        _second_layer_theta: Transmitted angle (in radians) in the second medium (can be float or ndarray).
 
     """
 

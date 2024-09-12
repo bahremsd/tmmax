@@ -141,7 +141,14 @@ def interpolate_nk(material_name: str) -> Callable[[float], complex]:
 
 
 def add_material_to_nk_database(wavelength_arr, refractive_index_arr, extinction_coeff_arr, material_name=''):
+    """
+    Add material properties to the nk database by saving the data into a CSV file.
 
+    This function validates and saves material properties such as wavelength, refractive index,
+    and extinction coefficient into a CSV file. The file is named based on the provided material name.
+
+
+    """
     
     # Validate input types
     # Check if all input arrays are of type jax.numpy.ndarray

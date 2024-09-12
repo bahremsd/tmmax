@@ -143,6 +143,13 @@ def interpolate_nk(material_name: str) -> Callable[[float], complex]:
 def add_material_to_nk_database(wavelength_arr, refractive_index_arr, extinction_coeff_arr, material_name=''):
 
 
+
+    if jnp.any(extinction_coeff_arr > 20):
+        warnings.warn("Extinction coefficient being greater than 20 indicates that the material is almost opaque. "
+                      "In the Transfer Matrix Method, to avoid the coefficients going to 0 and the gradient being zero, "
+                      "extinction coefficients greater than 20 have been thresholded to 20.", UserWarning)
+        extinction_coeff_arr = jnp.where(extinction_coeff_arr > 20, 20, extinction_coeff_arr)
+
     wavelength_arr, refractive_index_arr, extinction_coeff_arr = map(device_put, [wavelength_arr, refractive_index_arr, extinction_coeff_arr])
 
     data = jnp.column_stack((wavelength_arr, refractive_index_arr, extinction_coeff_arr))

@@ -102,7 +102,13 @@ def interpolate_1d(x: jnp.ndarray, y: jnp.ndarray) -> Callable[[float], float]:
     return interpolate  # Return the interpolation function to be used later
 
 def interpolate_nk(material_name: str) -> Callable[[float], complex]:
+    """
+    Load the nk data for a given material and return a callable function that computes
+    the complex refractive index for any wavelength.
 
+
+
+    """
     nk_data = load_nk_data(material_name) 
     wavelength, refractive_index, extinction_coefficient = nk_data.T 
 

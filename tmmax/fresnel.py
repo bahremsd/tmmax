@@ -11,6 +11,15 @@ def _fresnel_s(_first_layer_n: Union[float, jnp.ndarray],
     between two materials. The inputs are the refractive indices and the angles of incidence and 
     refraction for the two layers.
 
+    Args:
+        _first_layer_n (Union[float, jnp.ndarray]): Refractive index of the first layer (incident medium). 
+            Can be a float or an array if computing for multiple incident angles/materials.
+        _second_layer_n (Union[float, jnp.ndarray]): Refractive index of the second layer (transmitted medium). 
+            Similar to the first argument, this can also be a float or an array.
+        _first_layer_theta (Union[float, jnp.ndarray]): Angle of incidence in the first layer (in radians). 
+            Can be a float or an array.
+        _second_layer_theta (Union[float, jnp.ndarray]): Angle of refraction in the second layer (in radians). 
+            Can be a float or an array.
 
 
     """

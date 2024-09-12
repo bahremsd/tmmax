@@ -147,6 +147,11 @@ def add_material_to_nk_database(wavelength_arr, refractive_index_arr, extinction
     This function validates and saves material properties such as wavelength, refractive index,
     and extinction coefficient into a CSV file. The file is named based on the provided material name.
 
+    Args:
+        wavelength_arr (jnp.ndarray): Array of wavelengths in micrometers.
+        refractive_index_arr (jnp.ndarray): Array of refractive indices corresponding to the wavelengths.
+        extinction_coeff_arr (jnp.ndarray): Array of extinction coefficients corresponding to the wavelengths.
+        material_name (str): The name of the material, which is used to name the output CSV file.
 
     """
     

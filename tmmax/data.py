@@ -153,6 +153,9 @@ def add_material_to_nk_database(wavelength_arr, refractive_index_arr, extinction
         extinction_coeff_arr (jnp.ndarray): Array of extinction coefficients corresponding to the wavelengths.
         material_name (str): The name of the material, which is used to name the output CSV file.
 
+    Raises:
+        TypeError: If any of the input arrays are not of type jax.numpy.ndarray.
+        ValueError: If the input arrays have different lengths or if the material name is empty.
     """
     
     # Validate input types

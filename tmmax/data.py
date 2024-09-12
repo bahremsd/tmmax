@@ -120,7 +120,7 @@ def interpolate_nk(material_name: str) -> Callable[[float], complex]:
     compute_refractive_index = interpolate_1d(wavelength * 1e-6, refractive_index)  # Convert wavelength to meters for interpolation
     compute_extinction_coefficient = interpolate_1d(wavelength * 1e-6, extinction_coefficient)  # Convert wavelength to meters for interpolation
 
-
+    @jit  # Just-in-time compile the function to optimize performance
     def compute_nk(wavelength: float) -> complex:
 
         n = compute_refractive_index(wavelength) 

@@ -128,6 +128,9 @@ def interpolate_nk(material_name: str) -> Callable[[float], complex]:
         Args:
             wavelength (float): Wavelength in meters.
 
+        Returns:
+            complex: The complex refractive index, n + i*k, where n is the refractive index 
+                     and k is the extinction coefficient.
         """
         n = compute_refractive_index(wavelength)  # Get the refractive index at the given wavelength
         k = compute_extinction_coefficient(wavelength)  # Get the extinction coefficient at the given wavelength

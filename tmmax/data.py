@@ -64,7 +64,6 @@ def load_nk_data(material_name: str = '') -> Union[jnp.ndarray, None]:
     return data  # Return the loaded data as a JAX array
 
 
-
 def interpolate_1d(x: jnp.ndarray, y: jnp.ndarray) -> Callable[[float], float]:
     """
     Creates a 1D linear interpolation function based on the provided x and y arrays.
@@ -102,4 +101,20 @@ def interpolate_1d(x: jnp.ndarray, y: jnp.ndarray) -> Callable[[float], float]:
 
     return interpolate  # Return the interpolation function to be used later
 
+def interpolate_nk(material_name: str) -> Callable[[float], complex]:
 
+    nk_data = load_nk_data(material_name) 
+    wavelength, refractive_index, extinction_coefficient = nk_data.T 
+
+
+    compute_refractive_index = interpolate_1d(wavelength * 1e-6, refractive_index)
+    compute_extinction_coefficient = interpolate_1d(wavelength * 1e-6, extinction_coefficient) 
+
+
+    def compute_nk(wavelength: float) -> complex:
+
+        n = compute_refractive_index(wavelength) 
+        k = compute_extinction_coefficient(wavelength) 
+        return jnp.array(n + 1j * k) 
+
+    return compute_nk  # Return the function that computes the complex refractive index

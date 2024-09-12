@@ -101,6 +101,7 @@ def interpolate_1d(x: jnp.ndarray, y: jnp.ndarray) -> Callable[[float], float]:
 
     return interpolate  # Return the interpolation function to be used later
 
+
 def interpolate_nk(material_name: str) -> Callable[[float], complex]:
     """
     Load the nk data for a given material and return a callable function that computes
@@ -137,3 +138,18 @@ def interpolate_nk(material_name: str) -> Callable[[float], complex]:
         return jnp.array(n + 1j * k)  # Combine n and k into a complex number and return
 
     return compute_nk  # Return the function that computes the complex refractive index
+
+
+def add_material_to_nk_database(wavelength_arr, refractive_index_arr, extinction_coeff_arr, material_name=''):
+
+
+    wavelength_arr, refractive_index_arr, extinction_coeff_arr = map(device_put, [wavelength_arr, refractive_index_arr, extinction_coeff_arr])
+
+    data = jnp.column_stack((wavelength_arr, refractive_index_arr, extinction_coeff_arr))
+
+    path = os.path.join('nk_data', f'{material_name}.csv')
+
+    np.savetxt(path, np.asarray(data), delimiter=',', header='wavelength_in_um,n,k', comments='')
+    
+
+    print(f"'{os.path.basename(path)}' {'recreated' if os.path.exists(path) else 'created'} successfully.")

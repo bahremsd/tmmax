@@ -61,6 +61,8 @@ def _tmm_single_wl_angle_point(nk_functions: Dict[int, Callable], material_list:
         Args:
             wl (Union[float, jnp.ndarray]): Wavelength or array of wavelengths.
 
+        Returns:
+            jnp.ndarray: Array of complex refractive index values for each material.
         """
         return jnp.array([nk_functions[mat_idx](wl) for mat_idx in material_list])  # Get nk values for each material
 

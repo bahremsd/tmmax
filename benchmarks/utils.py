@@ -18,7 +18,13 @@ def get_nk_values(wl: float, nk_functions: List[Callable[[float], complex]], mat
     coefficient (k) as a complex number (n + j*k). The materials are indexed 
     by `material_list` to access their corresponding functions.
 
-
+    Args:
+    wl (float): The wavelength at which to compute the refractive index and extinction coefficient.
+    nk_functions (List[Callable[[float], complex]]): A list of functions, each corresponding to 
+    a material's refractive index and extinction coefficient. These functions take the wavelength 
+    as input and return a complex number (n + j*k).
+    material_list (List[int]): A list of indices, where each index corresponds to a material, 
+    and is used to retrieve the respective function from the `nk_functions` list.
 
     """
     

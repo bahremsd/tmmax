@@ -165,6 +165,8 @@ def generate_material_distribution_indices(N, low=0, high=10):
         low (int): Minimum value of the integers (inclusive).
         high (int): Maximum value of the integers (exclusive).
 
+    Returns:
+        numpy.ndarray: Array of random integers with no consecutive elements the same.
     """
     if N <= 0:
         raise ValueError("Array length N must be positive.")

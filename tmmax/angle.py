@@ -84,6 +84,20 @@ def _compute_layer_angles_single_wl_angle_point(nk_list: jnp.ndarray,
     Computes the angle of incidence for light in each layer of a multilayer thin film using Snell's law
     for a single wavelength and angle of incidence.
 
+    Args:
+        nk_list (jnp.ndarray): A JAX array containing the refractive index (n) and extinction coefficient (k) values 
+                               for each layer, typically as a function of wavelength.
+        
+        angle_of_incidence (Union[float, jnp.ndarray]): The angle of incidence (in radians) relative to the normal of 
+                                                        the first layer. Can be a float for single-angle computation 
+                                                        or an array for batch computation.
+                                                        
+        wavelength (Union[float, jnp.ndarray]): The wavelength or an array of wavelengths (ndarray) for which the computation 
+                                                is performed.
+                                                
+        polarization (bool): Determines the polarization state of light:
+            - False: s-polarization (perpendicular to the plane of incidence).
+            - True: p-polarization (parallel to the plane of incidence).
 
 
     """

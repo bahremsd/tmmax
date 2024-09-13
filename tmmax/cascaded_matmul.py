@@ -39,3 +39,11 @@ def _matmul(carry, phase_t_r):
     result = jnp.dot(carry, mat)
 
     return result, None  # Return the updated matrix and None as a placeholder for jax.lax.scan
+
+def _cascaded_matrix_multiplication(phases_ts_rs: jnp.ndarray) -> jnp.ndarray:
+
+    initial_value = jnp.eye(2, dtype=jnp.complex128) 
+
+    result, _ = jax.lax.scan(_matmul, initial_value, phases_ts_rs) 
+
+    return result 

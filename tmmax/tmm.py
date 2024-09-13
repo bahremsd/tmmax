@@ -113,7 +113,11 @@ def tmm(material_list: List[str],
         wavelength_arr: jnp.ndarray,
         angle_of_incidences: jnp.ndarray,
         polarization: Text) -> Tuple[jnp.ndarray, jnp.ndarray]:
-
+    """
+    Perform the Transfer Matrix Method (TMM) for multilayer thin films.
+    
+ 
+    """
 
     # Remove duplicate materials and create a unique set
     material_set = list(set(material_list))  # Create a unique list of materials

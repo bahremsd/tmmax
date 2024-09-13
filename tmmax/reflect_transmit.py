@@ -165,3 +165,26 @@ def _compute_rt_one_wl(nk_list: jnp.ndarray, layer_angles: jnp.ndarray,
     # to the reflectance and transmittance after all layers have been processed.
     return rt_one_wl[1]  # Return a 1D theta array for each layer
     # This output is the desired result: the reflectance and transmittance for the given wavelength.
+
+
+def _calculate_transmittace_from_coeff(t: Union[float, jnp.ndarray],
+                                       n_list_first: Union[complex, jnp.ndarray],
+                                       n_list_last: Union[complex, jnp.ndarray],
+                                       angle_of_incidence: Union[float, jnp.ndarray],
+                                       last_layer_angle: Union[complex, jnp.ndarray],
+                                       polarization: bool) -> jnp.ndarray:
+
+
+
+    if not polarization:  # If polarization is False
+
+        return jnp.abs(t)**2 * (                                        # Square of the magnitude of t
+            jnp.real(n_list_last * jnp.cos(last_layer_angle)) /         # Real part of (n_last * cos(last_layer_angle))
+            jnp.real(n_list_first * jnp.cos(angle_of_incidence))         # Real part of (n_first * cos(angle_of_incidence))
+        )
+    else:  # If polarization is True
+
+        return jnp.abs(t)**2 * (                                        # Square of the magnitude of t
+            jnp.real(n_list_last * jnp.conj(jnp.cos(last_layer_angle))) / # Real part of (n_last * conjugate(cos(last_layer_angle)))
+            jnp.real(n_list_first * jnp.conj(jnp.cos(angle_of_incidence))) # Real part of (n_first * conjugate(cos(angle_of_incidence)))
+        )

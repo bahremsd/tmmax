@@ -74,6 +74,12 @@ def _compute_rt_at_interface_p(carry, concatenated_nk_list_theta):
             - stacked_nk_list: A list of refractive indices of the two consecutive layers.
             - stacked_layer_angles: A list of angles of incidence and refraction at the interface between the layers.
 
+    Returns:
+        A tuple:
+            - Updated carry containing:
+                - carry_idx incremented by 1.
+                - carry_values with the newly computed r, t coefficients at the current interface.
+            - None (This is used to maintain the structure of a functional-style loop but has no further use).
     """
 
     # Unpack the concatenated data into two variables: refractive indices (nk) and angles (theta)

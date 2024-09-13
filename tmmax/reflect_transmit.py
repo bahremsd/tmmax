@@ -174,7 +174,12 @@ def _calculate_transmittace_from_coeff(t: Union[float, jnp.ndarray],
                                        last_layer_angle: Union[complex, jnp.ndarray],
                                        polarization: bool) -> jnp.ndarray:
 
+    """
+    Computes the transmittance for light passing through layers with potential polarization effects.
+    
 
+
+    """
 
     # Check if polarization effect should be considered
     if not polarization:  # If polarization is False

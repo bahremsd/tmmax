@@ -116,7 +116,13 @@ def tmm(material_list: List[str],
     """
     Perform the Transfer Matrix Method (TMM) for multilayer thin films.
     
- 
+    Args:
+        material_list (List[str]): A list of material names. Each material is identified by a string.
+        thickness_list (jnp.ndarray): An array of thicknesses corresponding to each layer.
+        wavelength_arr (jnp.ndarray): An array of wavelengths over which to perform the simulation.
+        angle_of_incidences (jnp.ndarray): An array of angles of incidence.
+        polarization (Text): The type of polarization ('s' for s-polarized or 'p' for p-polarized).
+
     """
 
     # Remove duplicate materials and create a unique set

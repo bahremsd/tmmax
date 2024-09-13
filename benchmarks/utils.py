@@ -108,7 +108,18 @@ def vtmm_tmm_rt_wl_theta(polarization: str, wavelength_arr: Union[np.ndarray, fl
     with data in the form of wavelength and angle of incidence arrays. It also retrieves the refractive index (n) 
     and extinction coefficient (k) values for the specified materials and wavelengths.
 
-
+    Args:
+        polarization (str): Polarization of the incident light. Either "s" (TE) or "p" (TM). 
+                            Determines how the electric field is oriented with respect to the plane of incidence.
+        material_list (List[str]): List of material names for each layer in the system. 
+                                   These names are mapped to numerical identifiers to be used in the calculation.
+        thickness_list (Union[np.ndarray, float]): Array or float of layer thicknesses in nanometers. 
+                                                  Each element corresponds to a layer in the system.
+        angle_of_incidences (Union[np.ndarray, float]): Array or float of angles of incidence in degrees. 
+                                                       Each angle defines the direction of incoming light relative to the surface normal.
+        wavelength_arr (Union[np.ndarray, float]): Array or float of wavelengths in nanometers. 
+                                                  Defines the wavelengths of the incident light.
+        
 
     """
     

@@ -160,7 +160,7 @@ def generate_material_distribution_indices(N, low=0, high=10):
     Generates an array of random integers with length N such that
     no two consecutive elements are the same.
 
-    Parameters:
+    Args:
         N (int): Length of the array.
         low (int): Minimum value of the integers (inclusive).
         high (int): Maximum value of the integers (exclusive).
@@ -188,6 +188,12 @@ def generate_material_list_with_air(index_array, material_list):
     Takes an array of indices and a material list, and generates a list of materials
     based on the index array, with 'Air' concatenated at the start and end.
 
+    Args:
+        index_array (numpy.ndarray): Array of integers representing indices.
+        material_list (list of str): List of material names (strings).
+
+    Returns:
+        list of str: List of materials with 'Air' at the start and end.
     """
     if not all(0 <= idx < len(material_list) for idx in index_array):
         raise ValueError("Index out of bounds for the material list.")

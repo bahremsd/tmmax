@@ -50,6 +50,8 @@ def _tmm_single_wl_angle_point(nk_functions: Dict[int, Callable], material_list:
         angle_of_incidence (Union[float, jnp.ndarray]): Angle of incidence in radians.
         polarization (bool): True for TM polarization, False for TE polarization.
 
+    Returns:
+        Tuple[jnp.ndarray, jnp.ndarray]: Reflectance (R) and transmittance (T) of the optical stack.
     """
 
     def get_nk_values(wl):

@@ -12,6 +12,15 @@ def _compute_rt_at_interface_s(carry, concatenated_nk_list_theta):
     It uses the Fresnel equations for s-polarized light. The function is designed to be used 
     in a JAX `lax.scan` loop, where it processes each interface iteratively.
     
+    Args:
+        carry: A tuple containing the index (carry_idx) and a matrix (carry_values) 
+               where the reflection and transmission coefficients will be stored.
+               - carry_idx (int): The current index, indicating which layer interface is being processed.
+               - carry_values (array): An array to store the r,t coefficients for each interface.
+        
+        concatenated_nk_list_theta: A tuple containing two arrays:
+               - stacked_nk_list (array): The refractive indices (n) of two consecutive layers at the interface.
+               - stacked_layer_angles (array): The angles of incidence for the two consecutive layers.
 
 
     """

@@ -15,7 +15,10 @@ def _matmul(carry, phase_t_r):
             - phase_t_r[1] represents the transmission coefficient t or T (a scalar).
             - phase_t_r[2] represents the reflection coefficient r or R (a scalar).
 
-
+    Returns:
+        jax.numpy.ndarray: The updated product after multiplying the carry matrix with the current matrix.
+                           This is also a 2x2 complex matrix.
+        None: A placeholder required by jax.lax.scan for compatibility.
     """
     # Create the diagonal phase matrix based on phase_t_r[0]
     # This matrix introduces a phase shift based on the delta value

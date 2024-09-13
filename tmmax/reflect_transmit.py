@@ -205,7 +205,12 @@ def _calculate_transmittace_from_coeff(t: Union[float, jnp.ndarray],
 
 
 def _create_phases_ts_rs(_trs: jnp.ndarray, _phases: jnp.ndarray) -> jnp.ndarray:
+    """
+    Create a new array combining phase and ts values.
 
+
+
+    """
 
     N = _phases.shape[0]  # Get the number of elements (N) in the _phases array
 

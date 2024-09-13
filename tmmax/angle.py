@@ -12,7 +12,16 @@ def is_propagating_wave(n: Union[float, jnp.ndarray], angle_of_incidence: Union[
     Determines whether a wave is forward-propagating through a multilayer thin film stack based on 
     the refractive index, angle of incidence, and polarization.
 
+    
+    Args:
+    n (Union[float, jnp.ndarray]): Complex refractive index of the medium, which can be an array or scalar.
+    angle_of_incidence (Union[float, jnp.ndarray]): Angle of incidence of the incoming wave in radians.
+    polarization (bool): Polarization of the wave:
+        - False for s-polarization (perpendicular to the plane of incidence).
+        - True for p-polarization (parallel to the plane of incidence).
 
+    
+    
     """
 
     # Multiply the refractive index (n) by the cosine of the angle of incidence

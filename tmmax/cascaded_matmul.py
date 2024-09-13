@@ -42,8 +42,10 @@ def _matmul(carry, phase_t_r):
 
 def _cascaded_matrix_multiplication(phases_ts_rs: jnp.ndarray) -> jnp.ndarray:
 
-    initial_value = jnp.eye(2, dtype=jnp.complex128) 
+    initial_value = jnp.eye(2, dtype=jnp.complex128)  # Initialize with the identity matrix of size 2x2. # The identity matrix acts as the multiplicative identity, ensuring that the multiplication starts correctly.
 
-    result, _ = jax.lax.scan(_matmul, initial_value, phases_ts_rs) 
+    # jax.lax.scan applies a function across the sequence of matrices. Here, _matmul is the function applied, starting with the identity matrix.
+    # `result` will hold the final matrix after processing all input matrices.
+    result, _ = jax.lax.scan(_matmul, initial_value, phases_ts_rs)  # Scan function accumulates results of _matmul over the matrices.
 
-    return result 
+    return result  # Return the final accumulated matrix product. # The result is the product of all input matrices in the given sequence.

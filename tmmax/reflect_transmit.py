@@ -6,7 +6,15 @@ from typing import Union, List
 from fresnel import _fresnel_s, _fresnel_p
 
 def _compute_rt_at_interface_s(carry, concatenated_nk_list_theta):
+    """
+    This function calculates the reflection (r) and transmission (t) coefficients 
+    for s-polarization at the interface between two layers in a multilayer thin-film system. 
+    It uses the Fresnel equations for s-polarized light. The function is designed to be used 
+    in a JAX `lax.scan` loop, where it processes each interface iteratively.
+    
 
+
+    """
 
     # Unpack the concatenated list into refractive index list and angle list
     stacked_nk_list, stacked_layer_angles = concatenated_nk_list_theta

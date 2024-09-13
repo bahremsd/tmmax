@@ -47,6 +47,13 @@ def tmm_coh_tmm_array(polarization: str,
     interpolates the refractive index (n) and extinction coefficient (k) for the materials at given 
     wavelengths and applies TMM over the material layers for each wavelength and angle of incidence.
     
+    Args:
+        polarization (str): Polarization of the incident light. Either "s" (TE) or "p" (TM).
+        material_list (List[str]): List of material names for each layer.
+        thickness_list (Union[np.ndarray, float]): Array of thicknesses for each layer in nanometers.
+        angle_of_incidences (Union[np.ndarray, float]): Array of angles of incidence in degrees.
+        wavelength_arr (Union[np.ndarray, float]): Array of wavelengths in nanometers.
+        
 
     """
 

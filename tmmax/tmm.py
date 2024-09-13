@@ -37,7 +37,12 @@ def _compute_kz_single_wl_angle_point(
 def _tmm_single_wl_angle_point(nk_functions: Dict[int, Callable], material_list: list[int],
                                thickness_list: jnp.ndarray, wavelength: Union[float, jnp.ndarray],
                                angle_of_incidence: Union[float, jnp.ndarray], polarization: bool) -> Tuple[jnp.ndarray, jnp.ndarray]:
+    """
+    Computes the reflectance (R) and transmittance (T) of a multi-layer optical film for a given wavelength
+    and angle of incidence using the Transfer Matrix Method (TMM).
 
+
+    """
 
     def get_nk_values(wl):
 

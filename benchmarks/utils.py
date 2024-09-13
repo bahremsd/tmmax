@@ -156,7 +156,12 @@ def vtmm_tmm_rt_wl_theta(polarization: str, wavelength_arr: Union[np.ndarray, fl
     return result  # Return the results of the tmm_rt calculation
 
 def generate_material_distribution_indices(N, low=0, high=10):
+    """
+    Generates an array of random integers with length N such that
+    no two consecutive elements are the same.
 
+
+    """
     if N <= 0:
         raise ValueError("Array length N must be positive.")
     

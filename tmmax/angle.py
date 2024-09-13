@@ -82,33 +82,43 @@ def _compute_layer_angles_single_wl_angle_point(nk_list: jnp.ndarray,
                                                 polarization: bool) -> jnp.ndarray:
 
 
-    sin_theta = jnp.sin(angle_of_incidence) * nk_list[0] / nk_list  
-    theta_array = jnp.arcsin(sin_theta) 
+    # Calculate the sine of the angles in the first layer using Snell's law
+    # Here, we are computing sin(theta) for each layer using the ratio of the refractive index of the first layer 
+    # to the refractive index of the current layer (Snell's Law).
+    sin_theta = jnp.sin(angle_of_incidence) * nk_list[0] / nk_list  # Ratio ensures correct angle for each layer
 
-    is_incoming_props = is_propagating_wave(nk_list[0], theta_array[0], polarization)  
-    is_outgoing_props = is_propagating_wave(nk_list[-1], theta_array[-1], polarization) 
+    # Compute the angle (theta) in each layer using the arcsin function
+    # jnp.arcsin is used here to calculate the inverse sine (arcsine) and is compatible with complex values if needed.
+    theta_array = jnp.arcsin(sin_theta)  # Converts sin(theta) values back to theta (angle in radians)
 
-    
+    # Check if the wave is forward propagating or not by calculating its properties for the first and last layer.
+    # is_propagating_wave returns a boolean array where True means the wave is propagating and False means evanescent.
+    is_incoming_props = is_propagating_wave(nk_list[0], theta_array[0], polarization)  # First layer propagation check
+    is_outgoing_props = is_propagating_wave(nk_list[-1], theta_array[-1], polarization)  # Last layer propagation check
+
+    # If the wave is evanescent (non-propagating), update the angle by flipping it (subtracting from pi).
     def update_theta_arr_incoming(_):
-        return theta_array.at[0].set(jnp.pi - theta_array[0])  
+        return theta_array.at[0].set(jnp.pi - theta_array[0])  # Flips the angle in the first layer if needed
 
-
+    # Similarly for the outgoing wave in the last layer.
     def update_theta_arr_outgoing(_):
-        return theta_array.at[-1].set(jnp.pi - theta_array[-1]) 
+        return theta_array.at[-1].set(jnp.pi - theta_array[-1])  # Flips the angle in the last layer if needed
 
-
+    # If the wave is propagating normally, return the theta_array unchanged.
     def return_unchanged_theta(_):
-        return theta_array 
+        return theta_array  # No angle flip if propagation is normal
 
+    # Handle the evanescent and lossy cases by checking the incoming wave's properties.
+    # If any wave in the first layer is non-propagating, the angle gets flipped.
+    condition_incoming = jnp.any(is_incoming_props <= 0)  # Check if the incoming wave has an evanescent component
+    condition_outgoing = jnp.any(is_outgoing_props <= 0)  # Check if the outgoing wave has an evanescent component
 
-    condition_incoming = jnp.any(is_incoming_props <= 0) 
-    condition_outgoing = jnp.any(is_outgoing_props <= 0) 
+    # Conditionally update the theta_array based on whether the incoming wave is evanescent or not.
+    # jax.lax.cond is used here to conditionally perform updates based on the given condition.
+    theta_array = jax.lax.cond(condition_incoming, update_theta_arr_incoming, return_unchanged_theta, operand=None)  # Conditionally flip the angle for incoming wave
+    theta_array = jax.lax.cond(condition_outgoing, update_theta_arr_outgoing, return_unchanged_theta, operand=None)  # Conditionally flip the angle for outgoing wave
 
-
-    theta_array = jax.lax.cond(condition_incoming, update_theta_arr_incoming, return_unchanged_theta, operand=None) 
-    theta_array = jax.lax.cond(condition_outgoing, update_theta_arr_outgoing, return_unchanged_theta, operand=None) 
-
-
-    return theta_array  
+    # Return the final angles of incidence (theta_array) for each layer, reflecting any necessary flips.
+    return theta_array  # Final output: angles of incidence in each layer after applying Snell's law
 
 

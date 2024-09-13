@@ -101,6 +101,14 @@ def _compute_rt_at_interface_p(carry, concatenated_nk_list_theta):
 
 def _compute_rt_one_wl(nk_list: jnp.ndarray, layer_angles: jnp.ndarray,
                        wavelength: Union[float, jnp.ndarray], polarization: bool) -> jnp.ndarray:
+    """
+    Computes the reflectance and transmittance for a single wavelength 
+    across multiple layers in a stack of materials. The computation 
+    takes into account the refractive index of each layer, the angle of 
+    incidence in each layer, the wavelength of the light, and the 
+    polarization of the light.
+
+    """
 
     # Initialize the state for `jax.lax.scan`. The first element (0) is a placeholder 
     # and won't be used. The second element is a 2D array of zeros to hold intermediate 

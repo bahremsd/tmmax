@@ -120,7 +120,11 @@ def vtmm_tmm_rt_wl_theta(polarization: str, wavelength_arr: Union[np.ndarray, fl
         wavelength_arr (Union[np.ndarray, float]): Array or float of wavelengths in nanometers. 
                                                   Defines the wavelengths of the incident light.
         
-
+    Returns:
+        Tuple[np.ndarray, np.ndarray]: Two 2D arrays representing the reflection (R) and transmission (T) 
+                                       coefficients, each of shape (len(wavelength_arr), len(angle_of_incidences)).
+                                       The reflection and transmission values are calculated for each combination 
+                                       of wavelength and angle of incidence.
     """
     
     # Create a unique set of materials from the input material list to avoid duplicates

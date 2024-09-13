@@ -108,6 +108,16 @@ def _compute_rt_one_wl(nk_list: jnp.ndarray, layer_angles: jnp.ndarray,
     incidence in each layer, the wavelength of the light, and the 
     polarization of the light.
 
+    Args:
+        nk_list (jnp.ndarray): Array of complex refractive indices for each layer. 
+                               The shape should be (num_layers,).
+        layer_angles (jnp.ndarray): Array of angles of incidence for each layer. 
+                                    The shape should be (num_layers,).
+        wavelength (float or jnp.ndarray): The wavelength of light, given as either 
+                                           a scalar or a JAX array.
+        polarization (bool): Boolean flag that determines the polarization state of the light. 
+                             If False, s-polarization is used; if True, p-polarization is used.
+
     """
 
     # Initialize the state for `jax.lax.scan`. The first element (0) is a placeholder 

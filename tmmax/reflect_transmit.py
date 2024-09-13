@@ -208,6 +208,10 @@ def _create_phases_ts_rs(_trs: jnp.ndarray, _phases: jnp.ndarray) -> jnp.ndarray
     """
     Create a new array combining phase and ts values.
 
+    Args:
+        _trs (jnp.ndarray): A 2D array of shape (N, 2) where N is the number of elements. 
+                            Each element is a pair of values [t, s].
+        _phases (jnp.ndarray): A 1D array of shape (N,) containing phase values for each element.
 
 
     """

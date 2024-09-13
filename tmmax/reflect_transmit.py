@@ -97,3 +97,25 @@ def _compute_rt_at_interface_p(carry, concatenated_nk_list_theta):
 
     carry_idx = carry_idx + 1  # Move to the next index for further iterations
     return (carry_idx, carry_values), None  # Return the updated carry with incremented index and updated r,t values, and None as a placeholder
+
+
+def _compute_rt_one_wl(nk_list: jnp.ndarray, layer_angles: jnp.ndarray,
+                       wavelength: Union[float, jnp.ndarray], polarization: bool) -> jnp.ndarray:
+
+
+    init_state = (0, jnp.zeros((len(nk_list) - 2, 2), dtype=jnp.float32))  # Initial state with an array of zeros
+
+
+
+    stacked_nk_list = jnp.stack([nk_list[:-2], nk_list[1:-1]], axis=1)  # Stack the original and shifted inputs for processing in pairs
+
+    stacked_layer_angles = jnp.stack([layer_angles[:-2], layer_angles[1:-1]], axis=1)
+
+    if polarization == False:
+        rt_one_wl, _ = jax.lax.scan(_compute_rt_at_interface_s, init_state, (stacked_nk_list, stacked_layer_angles))  # s-polarization case
+
+
+    elif polarization == True:
+        rt_one_wl, _ = jax.lax.scan(_compute_rt_at_interface_p, init_state, (stacked_nk_list, stacked_layer_angles))  # p-polarization case
+
+    return rt_one_wl[1]  # Return a 1D theta array for each layer

@@ -41,7 +41,10 @@ def _matmul(carry, phase_t_r):
     return result, None  # Return the updated matrix and None as a placeholder for jax.lax.scan
 
 def _cascaded_matrix_multiplication(phases_ts_rs: jnp.ndarray) -> jnp.ndarray:
+    """
+    Performs cascaded matrix multiplication on a sequence of complex matrices using scan.
 
+    """
     initial_value = jnp.eye(2, dtype=jnp.complex128)  # Initialize with the identity matrix of size 2x2. # The identity matrix acts as the multiplicative identity, ensuring that the multiplication starts correctly.
 
     # jax.lax.scan applies a function across the sequence of matrices. Here, _matmul is the function applied, starting with the identity matrix.

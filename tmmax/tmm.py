@@ -106,3 +106,28 @@ def _tmm_single_wl_angle_point(nk_functions: Dict[int, Callable], material_list:
 
     return R, T
     # Return the reflectance and transmittance values
+
+
+def tmm(material_list: List[str],
+        thickness_list: jnp.ndarray,
+        wavelength_arr: jnp.ndarray,
+        angle_of_incidences: jnp.ndarray,
+        polarization: Text) -> Tuple[jnp.ndarray, jnp.ndarray]:
+
+    material_set = list(set(material_list))  # Create a unique list of materials
+    material_enum = {material: i for i, material in enumerate(material_set)}  # Map each material to an index
+    material_list = [int(material_enum[material]) for material in material_list]  # Map materials to indices based on material_enum
+    nk_funkcs = {i: interpolate_nk(material) for i, material in enumerate(material_set)}  # Interpolate n and k for each material
+
+    if polarization == 's':
+        polarization = False  # s-polarized light
+    elif polarization == 'p':
+        polarization = True  # p-polarized light
+    else:
+        raise TypeError("The polarization can be 's' or 'p', not the other parts. Correct it")  # Raise an error for invalid polarization input
+
+    tmm_vectorized = vmap(vmap(_tmm_single_wl_angle_point, (None, None, None, 0, None, None)), (None, None, None, None, 0, None))  # Vectorize _tmm_single_wl_angle_point over wavelengths and angles
+    result = tmm_vectorized(nk_funkcs, material_list, thickness_list, wavelength_arr, angle_of_incidences, polarization)  # Compute the TMM results
+
+
+    return result 

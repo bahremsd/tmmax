@@ -94,3 +94,35 @@ def tmm_coh_tmm_array(polarization: str,
 
     # Return the final reflection (R) and transmission (T) arrays for all wavelengths and angles # These are 2D arrays, where each element corresponds to a specific wavelength and angle.
     return R, T
+
+def vtmm_tmm_rt_wl_theta(polarization: str, wavelength_arr: Union[np.ndarray, float], 
+                         angle_of_incidences: Union[np.ndarray, float], 
+                         material_list: List[str], thickness_list: Union[np.ndarray, float]) -> Tuple[np.ndarray, np.ndarray]:
+
+    # Create a unique set of materials from the input material list to avoid duplicates
+    material_set = list(set(material_list))  # Convert material list to set for unique materials
+    
+    # Create an enumeration mapping of materials to integers for easier indexing in future calculations
+    material_enum = {material: i for i, material in enumerate(material_set)}  # Material to index dictionary
+    
+    # Replace material names in the material list with their corresponding numerical indices
+    material_list = [int(material_enum[material]) for material in material_list]  # List of material indices
+    
+    # Retrieve interpolating functions for refractive index and extinction coefficient for each material
+    nk_funkcs = {i: interpolate_nk(material) for i, material in enumerate(material_set)}  # Functions for n and k values
+    
+    # Get the refractive index and extinction coefficient values for the first wavelength in the array
+    # Using nk_funkcs, this retrieves n and k values for all materials at the specified wavelength
+    nk_list = get_nk_values(wavelength_arr[0], nk_funkcs, material_list)  # n and k values for the materials
+    
+    # Calculate angular frequency (omega) from the wavelength array. Omega = 2 * pi * c / wavelength
+    omega = speed_of_light / wavelength_arr * 2 * np.pi  # Convert wavelength to angular frequency
+    
+    # Calculate the parallel component of the wavevector (kx) from the angle of incidence and wavelength
+    kx = np.sin(angle_of_incidences) * 2 * np.pi / wavelength_arr  # Calculate kx from angles and wavelength
+    
+    # Call the tmm_rt function from the vtmm library with the transformed arguments
+    result = tmm_rt(polarization, omega, kx, nk_list, thickness_list)  # Reflection and transmission calculations
+    
+    # Return the reflection and transmission results
+    return result  # Return the results of the tmm_rt calculation

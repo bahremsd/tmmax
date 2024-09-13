@@ -58,7 +58,6 @@ def _compute_rt_at_interface_s(carry, concatenated_nk_list_theta):
     return (carry_idx, carry_values), None
 
 
-
 def _compute_rt_at_interface_p(carry, concatenated_nk_list_theta):
     """
     This function computes the reflection and transmission (r, t) coefficients at the interface between two layers
@@ -97,7 +96,6 @@ def _compute_rt_at_interface_p(carry, concatenated_nk_list_theta):
 
     carry_idx = carry_idx + 1  # Move to the next index for further iterations
     return (carry_idx, carry_values), None  # Return the updated carry with incremented index and updated r,t values, and None as a placeholder
-
 
 def _compute_rt_one_wl(nk_list: jnp.ndarray, layer_angles: jnp.ndarray,
                        wavelength: Union[float, jnp.ndarray], polarization: bool) -> jnp.ndarray:
@@ -240,3 +238,4 @@ def _create_phases_ts_rs(_trs: jnp.ndarray, _phases: jnp.ndarray) -> jnp.ndarray
                                                     # to apply it across all indices efficiently
     
     return result  # Return the result as a 2D array of shape (N, 3)
+

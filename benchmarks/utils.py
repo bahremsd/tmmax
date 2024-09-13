@@ -33,3 +33,22 @@ def get_nk_values(wl: float, nk_functions: List[Callable[[float], complex]], mat
     """
     
     return np.array([nk_functions[mat_idx](wl) for mat_idx in material_list])  # Convert the resulting list to a NumPy array.
+
+
+def tmm_coh_tmm_array(polarization, material_list, thickness_list, angle_of_incidences, wavelength_arr):
+    material_set = list(set(material_list))
+    material_enum = {material: i for i, material in enumerate(material_set)}
+    material_list = [int(material_enum[material]) for material in material_list]
+    nk_funkcs = {i: interpolate_nk(material) for i, material in enumerate(material_set)}
+    thickness_list = np.concatenate(([np.inf], thickness_list, [np.inf]), axis=None)
+    R = np.zeros((len(wavelength_arr), len(angle_of_incidences)), dtype=np.float64)
+    T = np.zeros((len(wavelength_arr), len(angle_of_incidences)), dtype=np.float64)
+    
+    for i in range(len(wavelength_arr)):
+        for j in range(len(angle_of_incidences)):
+            nk_list = get_nk_values(wavelength_arr[i], nk_funkcs, material_list)
+            result = coh_tmm(polarization, nk_list, thickness_list, angle_of_incidences[j], wavelength_arr[i])
+            R[i,j] = result['R']
+            T[i,j] = result['T']
+
+    return R,T

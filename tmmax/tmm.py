@@ -24,7 +24,8 @@ def _compute_kz_single_wl_angle_point(
         layer_angles (Union[int, jnp.ndarray]): A scalar or 1D array specifying the angle of incidence for each layer. It should be in radians.
         wavelength (Union[int, jnp.ndarray]): A scalar or 1D array of wavelengths corresponding to the refractive indices.
 
-
+    Returns:
+        jnp.ndarray: A 1D array of computed kz values, which represents the z-component of the wave vector for each wavelength and angle.
     """
     # 2 * jnp.pi * nk_list: Scales the refractive index to account for wavelength in radians
     # jnp.cos(layer_angles): Computes the cosine of the incident angle for each layer

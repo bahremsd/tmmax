@@ -13,13 +13,15 @@ def is_propagating_wave(n: Union[float, jnp.ndarray], angle_of_incidence: Union[
     n_cos_theta = n * jnp.cos(angle_of_incidence)  
 
     def define_is_forward_if_bigger_than_eps(_):
-
+        """Handle cases where the imaginary part of the refractive index is significant, i.e., 
+        evanescent waves or lossy media."""
         is_forward_s = jnp.imag(n_cos_theta) 
         is_forward_p = is_forward_s  
         return is_forward_s, is_forward_p  
 
     def define_is_forward_if_smaller_than_eps(_):
-
+        """Handle cases where the real part of the refractive index dominates, 
+        indicating propagating waves."""
         is_forward_s = jnp.real(n_cos_theta)  
 
 

@@ -160,6 +160,10 @@ def generate_material_distribution_indices(N, low=0, high=10):
     Generates an array of random integers with length N such that
     no two consecutive elements are the same.
 
+    Parameters:
+        N (int): Length of the array.
+        low (int): Minimum value of the integers (inclusive).
+        high (int): Maximum value of the integers (exclusive).
 
     """
     if N <= 0:

@@ -80,7 +80,13 @@ def _compute_layer_angles_single_wl_angle_point(nk_list: jnp.ndarray,
                                                 angle_of_incidence: Union[float, jnp.ndarray],
                                                 wavelength: Union[float, jnp.ndarray],
                                                 polarization: bool) -> jnp.ndarray:
+    """
+    Computes the angle of incidence for light in each layer of a multilayer thin film using Snell's law
+    for a single wavelength and angle of incidence.
 
+
+
+    """
 
     # Calculate the sine of the angles in the first layer using Snell's law
     # Here, we are computing sin(theta) for each layer using the ratio of the refractive index of the first layer 

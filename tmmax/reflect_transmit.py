@@ -60,7 +60,12 @@ def _compute_rt_at_interface_s(carry, concatenated_nk_list_theta):
 
 
 def _compute_rt_at_interface_p(carry, concatenated_nk_list_theta):
+    """
+    This function computes the reflection and transmission (r, t) coefficients at the interface between two layers
+    for P-polarized light (parallel polarization). It uses the Fresnel equations to calculate these coefficients 
+    based on the refractive indices and angles of incidence and refraction for the two layers.
 
+    """
 
     # Unpack the concatenated data into two variables: refractive indices (nk) and angles (theta)
     stacked_nk_list, stacked_layer_angles = concatenated_nk_list_theta  # Extract the refractive indices and angles from the input tuple

@@ -26,6 +26,10 @@ def get_nk_values(wl: float, nk_functions: List[Callable[[float], complex]], mat
     material_list (List[int]): A list of indices, where each index corresponds to a material, 
     and is used to retrieve the respective function from the `nk_functions` list.
 
+    Returns:
+    np.ndarray: An array of complex numbers where each entry corresponds to the refractive index (n) 
+    and extinction coefficient (k) of a material at the given wavelength `wl`.
+
     """
     
     return np.array([nk_functions[mat_idx](wl) for mat_idx in material_list])  # Convert the resulting list to a NumPy array.

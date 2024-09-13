@@ -8,6 +8,12 @@ from typing import Union # Type hints for function signatures
 EPSILON = sys.float_info.epsilon
 
 def is_propagating_wave(n: Union[float, jnp.ndarray], angle_of_incidence: Union[float, jnp.ndarray], polarization: bool) -> Union[float, jnp.ndarray]:
+    """
+    Determines whether a wave is forward-propagating through a multilayer thin film stack based on 
+    the refractive index, angle of incidence, and polarization.
+
+
+    """
 
     # Multiply the refractive index (n) by the cosine of the angle of incidence
     n_cos_theta = n * jnp.cos(angle_of_incidence)  # Compute n*cos(theta) for angle propagation

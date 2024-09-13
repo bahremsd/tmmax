@@ -213,7 +213,9 @@ def _create_phases_ts_rs(_trs: jnp.ndarray, _phases: jnp.ndarray) -> jnp.ndarray
                             Each element is a pair of values [t, s].
         _phases (jnp.ndarray): A 1D array of shape (N,) containing phase values for each element.
 
-
+    Returns:
+        jnp.ndarray: A 2D array of shape (N, 3) where each row is [phase, t, s].
+                     The phase is from _phases, and t, s are from _trs.
     """
 
     N = _phases.shape[0]  # Get the number of elements (N) in the _phases array

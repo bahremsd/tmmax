@@ -207,13 +207,14 @@ def _calculate_transmittace_from_coeff(t: Union[float, jnp.ndarray],
 def _create_phases_ts_rs(_trs: jnp.ndarray, _phases: jnp.ndarray) -> jnp.ndarray:
 
 
-    N = _phases.shape[0] 
+    N = _phases.shape[0]  # Get the number of elements (N) in the _phases array
 
     def process_element(i: int) -> List[float]:
 
-        return [_phases[i], _trs[i][0], _trs[i][1]]
+        return [_phases[i], _trs[i][0], _trs[i][1]]  # Return the phase and ts values as a list
 
-
-    result = jax.vmap(process_element)(jnp.arange(N))
+    # Apply process_element function across all indices from 0 to N-1
+    result = jax.vmap(process_element)(jnp.arange(N))  # jax.vmap vectorizes the process_element function
+                                                    # to apply it across all indices efficiently
     
-    return result
+    return result  # Return the result as a 2D array of shape (N, 3)

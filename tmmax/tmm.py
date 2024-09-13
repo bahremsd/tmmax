@@ -9,7 +9,6 @@ from cascaded_matmul import _cascaded_matrix_multiplication
 from data import interpolate_nk
 from reflect_transmit import _compute_rt_one_wl, _create_phases_ts_rs, _calculate_transmittace_from_coeff
 
-
 def _compute_kz_single_wl_angle_point(
     nk_list: jnp.ndarray,           # Array of complex refractive indices for different wavelengths
     layer_angles: Union[int, jnp.ndarray],  # Angle of incidence for each layer, can be a single angle or an array
@@ -27,11 +26,12 @@ def _compute_kz_single_wl_angle_point(
     Returns:
         jnp.ndarray: A 1D array of computed kz values, which represents the z-component of the wave vector for each wavelength and angle.
     """
+
+    # Calculate the z-component of the wave vector for each wavelength and angle
+    return 2 * jnp.pi * nk_list * jnp.cos(layer_angles) / wavelength  
     # 2 * jnp.pi * nk_list: Scales the refractive index to account for wavelength in radians
     # jnp.cos(layer_angles): Computes the cosine of the incident angle for each layer
     # / wavelength: Divides by wavelength to get the wave vector component in the z-direction
-    # Calculate the z-component of the wave vector for each wavelength and angle
-    return 2 * jnp.pi * nk_list * jnp.cos(layer_angles) / wavelength  
 
 
 def _tmm_single_wl_angle_point(nk_functions: Dict[int, Callable], material_list: list[int],
@@ -106,6 +106,7 @@ def _tmm_single_wl_angle_point(nk_functions: Dict[int, Callable], material_list:
 
     return R, T
     # Return the reflectance and transmittance values
+
 
 
 def tmm(material_list: List[str],

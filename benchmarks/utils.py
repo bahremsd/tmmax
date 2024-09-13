@@ -98,7 +98,20 @@ def tmm_coh_tmm_array(polarization: str,
 def vtmm_tmm_rt_wl_theta(polarization: str, wavelength_arr: Union[np.ndarray, float], 
                          angle_of_incidences: Union[np.ndarray, float], 
                          material_list: List[str], thickness_list: Union[np.ndarray, float]) -> Tuple[np.ndarray, np.ndarray]:
+    """
+    The main goal of this function is to convert arguments for the `tmm_rt` function from the `vtmm` library to a format 
+    compatible with arrays of wavelengths and angles of incidence. The `vtmm` library works with angular frequency (omega) and 
+    parallel wavevector (kx), while this function accepts arrays of wavelengths and angles of incidence, which it 
+    converts to omega and kx, respectively.
 
+    This function essentially serves as a bridge between the two formats, allowing the `tmm_rt` function to work 
+    with data in the form of wavelength and angle of incidence arrays. It also retrieves the refractive index (n) 
+    and extinction coefficient (k) values for the specified materials and wavelengths.
+
+
+
+    """
+    
     # Create a unique set of materials from the input material list to avoid duplicates
     material_set = list(set(material_list))  # Convert material list to set for unique materials
     

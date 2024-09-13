@@ -7,6 +7,13 @@ def _matmul(carry, phase_t_r):
     """
     Multiplies two complex matrices in a sequence.
 
+    Args:
+        carry (jax.numpy.ndarray): The accumulated product of the matrices so far.
+                                   This is expected to be a 2x2 complex matrix.
+        phase_t_r (jax.numpy.ndarray): A 3-element array where:
+            - phase_t_r[0] represents the phase shift delta (a scalar).
+            - phase_t_r[1] represents the transmission coefficient t or T (a scalar).
+            - phase_t_r[2] represents the reflection coefficient r or R (a scalar).
 
 
     """

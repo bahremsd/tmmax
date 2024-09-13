@@ -54,7 +54,9 @@ def tmm_coh_tmm_array(polarization: str,
         angle_of_incidences (Union[np.ndarray, float]): Array of angles of incidence in degrees.
         wavelength_arr (Union[np.ndarray, float]): Array of wavelengths in nanometers.
         
-
+    Returns:
+        Tuple[np.ndarray, np.ndarray]: Two 2D arrays for reflection (R) and transmission (T). 
+        The shape of these arrays will be (len(wavelength_arr), len(angle_of_incidences)).
     """
 
     # Create a set of unique materials to avoid redundant interpolation # The list(set(...)) ensures unique materials.

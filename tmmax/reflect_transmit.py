@@ -56,3 +56,22 @@ def _compute_rt_at_interface_s(carry, concatenated_nk_list_theta):
 
     # Return the updated carry (with new index and r,t coefficients) and None for lax.scan compatibility
     return (carry_idx, carry_values), None
+
+
+
+def _compute_rt_at_interface_p(carry, concatenated_nk_list_theta):
+
+
+
+    stacked_nk_list, stacked_layer_angles = concatenated_nk_list_theta  
+    carry_idx, carry_values = carry 
+
+    r_t_matrix = _fresnel_p(_first_layer_theta = stacked_layer_angles[0],  # Incident angle at the first layer
+                              _second_layer_theta = stacked_layer_angles[1],  # Refraction angle at the second layer
+                              _first_layer_n = stacked_nk_list[0],  # Refractive index of the first layer
+                              _second_layer_n = stacked_nk_list[1])  # Refractive index of the second layer
+
+
+    carry_values = carry_values.at[carry_idx, :].set(r_t_matrix)  
+
+    return (carry_idx, carry_values), None  # Return the updated carry with incremented index and updated r,t values, and None as a placeholder

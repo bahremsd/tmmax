@@ -18,6 +18,11 @@ def _compute_kz_single_wl_angle_point(
 
     """
     Computes the z-component of the wave vector (kz) for a given set of refractive indices, layer angles, and wavelengths.
+    
+    Args:
+        nk_list (jnp.ndarray): A 1D array containing the refractive indices (n) or complex indices (n + ik) for different wavelengths.
+        layer_angles (Union[int, jnp.ndarray]): A scalar or 1D array specifying the angle of incidence for each layer. It should be in radians.
+        wavelength (Union[int, jnp.ndarray]): A scalar or 1D array of wavelengths corresponding to the refractive indices.
 
 
     """

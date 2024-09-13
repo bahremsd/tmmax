@@ -75,3 +75,40 @@ def is_propagating_wave(n: Union[float, jnp.ndarray], angle_of_incidence: Union[
     elif polarization is True:
         # For p-polarization, return whether the wave is forward-propagating
         return jnp.array([is_forward_p])  # p-polarization output as a single-element array
+
+def _compute_layer_angles_single_wl_angle_point(nk_list: jnp.ndarray,
+                                                angle_of_incidence: Union[float, jnp.ndarray],
+                                                wavelength: Union[float, jnp.ndarray],
+                                                polarization: bool) -> jnp.ndarray:
+
+
+    sin_theta = jnp.sin(angle_of_incidence) * nk_list[0] / nk_list  
+    theta_array = jnp.arcsin(sin_theta) 
+
+    is_incoming_props = is_propagating_wave(nk_list[0], theta_array[0], polarization)  
+    is_outgoing_props = is_propagating_wave(nk_list[-1], theta_array[-1], polarization) 
+
+    
+    def update_theta_arr_incoming(_):
+        return theta_array.at[0].set(jnp.pi - theta_array[0])  
+
+
+    def update_theta_arr_outgoing(_):
+        return theta_array.at[-1].set(jnp.pi - theta_array[-1]) 
+
+
+    def return_unchanged_theta(_):
+        return theta_array 
+
+
+    condition_incoming = jnp.any(is_incoming_props <= 0) 
+    condition_outgoing = jnp.any(is_outgoing_props <= 0) 
+
+
+    theta_array = jax.lax.cond(condition_incoming, update_theta_arr_incoming, return_unchanged_theta, operand=None) 
+    theta_array = jax.lax.cond(condition_outgoing, update_theta_arr_outgoing, return_unchanged_theta, operand=None) 
+
+
+    return theta_array  
+
+

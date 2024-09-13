@@ -4,7 +4,12 @@ import jax.numpy as jnp # Import JAX's version of NumPy for differentiable compu
 
 
 def _matmul(carry, phase_t_r):
+    """
+    Multiplies two complex matrices in a sequence.
 
+
+
+    """
     # Create the diagonal phase matrix based on phase_t_r[0]
     # This matrix introduces a phase shift based on the delta value
     phase_matrix = jnp.array([[jnp.exp(-1j * phase_t_r[0]), 0],  # Matrix with phase shift for the first entry

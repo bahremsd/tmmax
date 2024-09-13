@@ -40,6 +40,15 @@ def tmm_coh_tmm_array(polarization: str,
                       thickness_list: Union[np.ndarray, float], 
                       angle_of_incidences: Union[np.ndarray, float], 
                       wavelength_arr: Union[np.ndarray, float]) -> Tuple[np.ndarray, np.ndarray]:
+    """
+    This function calculates the reflection (R) and transmission (T) for a multilayer thin film stack 
+    over arrays of wavelengths and angles of incidence using the coherent Transfer Matrix Method (TMM). 
+    The polarization of the incident light is considered either "s" (TE) or "p" (TM). The function 
+    interpolates the refractive index (n) and extinction coefficient (k) for the materials at given 
+    wavelengths and applies TMM over the material layers for each wavelength and angle of incidence.
+    
+
+    """
 
     # Create a set of unique materials to avoid redundant interpolation # The list(set(...)) ensures unique materials.
     material_set = list(set(material_list))  

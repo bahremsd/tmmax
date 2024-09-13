@@ -21,7 +21,20 @@ def is_propagating_wave(n: Union[float, jnp.ndarray], angle_of_incidence: Union[
         - True for p-polarization (parallel to the plane of incidence).
 
     
+    Returns:
+    Union[float, jnp.ndarray]: 
+        - A positive value indicates forward propagation for both s and p polarizations.
+        - A negative or zero value implies backward propagation or evanescent waves (non-propagating).
+
     
+    The function evaluates whether the wave, given its angle, refractive index, and polarization, is a 
+    forward-propagating wave (i.e., traveling from the front to the back of the stack). This is crucial 
+    when calculating Snell's law in multilayer structures to ensure light is correctly entering or 
+    exiting the stack.
+
+    
+    The check considers both real and complex values of the refractive index and angle, ensuring that the 
+    light propagates within the correct angle range for physical interpretation.    
     """
 
     # Multiply the refractive index (n) by the cosine of the angle of incidence

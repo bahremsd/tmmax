@@ -221,7 +221,10 @@ def _create_phases_ts_rs(_trs: jnp.ndarray, _phases: jnp.ndarray) -> jnp.ndarray
     N = _phases.shape[0]  # Get the number of elements (N) in the _phases array
 
     def process_element(i: int) -> List[float]:
+        """
+        Process an individual element to create a list of phase and ts values.
 
+        """
         return [_phases[i], _trs[i][0], _trs[i][1]]  # Return the phase and ts values as a list
 
     # Apply process_element function across all indices from 0 to N-1

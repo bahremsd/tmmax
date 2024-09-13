@@ -177,7 +177,14 @@ def _calculate_transmittace_from_coeff(t: Union[float, jnp.ndarray],
     """
     Computes the transmittance for light passing through layers with potential polarization effects.
     
-
+    Args:
+        t (float or jnp.ndarray): The transmission coefficient or array of coefficients.
+        n_list_first (complex or jnp.ndarray): The refractive index of the first layer or an array of indices.
+        n_list_last (complex or jnp.ndarray): The refractive index of the last layer or an array of indices.
+        angle_of_incidence (float or jnp.ndarray): The angle of incidence in radians or an array of angles.
+        last_layer_angle (complex or jnp.ndarray): The angle in the last layer, can be complex, in radians or array.
+        polarization (bool): Indicates if polarization effects should be considered (True) or not (False).
+    
 
     """
 

@@ -202,3 +202,18 @@ def _calculate_transmittace_from_coeff(t: Union[float, jnp.ndarray],
             jnp.real(n_list_last * jnp.conj(jnp.cos(last_layer_angle))) / # Real part of (n_last * conjugate(cos(last_layer_angle)))
             jnp.real(n_list_first * jnp.conj(jnp.cos(angle_of_incidence))) # Real part of (n_first * conjugate(cos(angle_of_incidence)))
         )
+
+
+def _create_phases_ts_rs(_trs: jnp.ndarray, _phases: jnp.ndarray) -> jnp.ndarray:
+
+
+    N = _phases.shape[0] 
+
+    def process_element(i: int) -> List[float]:
+
+        return [_phases[i], _trs[i][0], _trs[i][1]]
+
+
+    result = jax.vmap(process_element)(jnp.arange(N))
+    
+    return result

@@ -22,7 +22,10 @@ def _compute_rt_at_interface_s(carry, concatenated_nk_list_theta):
                - stacked_nk_list (array): The refractive indices (n) of two consecutive layers at the interface.
                - stacked_layer_angles (array): The angles of incidence for the two consecutive layers.
 
-
+    Returns:
+        A tuple of:
+            - Updated carry: The new index and updated matrix with the calculated r,t coefficients.
+            - None: Required to match the JAX `lax.scan` interface, where a second argument is expected.
     """
 
     # Unpack the concatenated list into refractive index list and angle list

@@ -123,6 +123,8 @@ def tmm(material_list: List[str],
         angle_of_incidences (jnp.ndarray): An array of angles of incidence.
         polarization (Text): The type of polarization ('s' for s-polarized or 'p' for p-polarized).
 
+    Returns:
+        Tuple[jnp.ndarray, jnp.ndarray]: A tuple containing two JAX arrays. The first array represents the transmission coefficients, and the second array represents the reflection coefficients.
     """
 
     # Remove duplicate materials and create a unique set

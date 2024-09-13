@@ -44,6 +44,11 @@ def _cascaded_matrix_multiplication(phases_ts_rs: jnp.ndarray) -> jnp.ndarray:
     """
     Performs cascaded matrix multiplication on a sequence of complex matrices using scan.
 
+    Args:
+        phases_ts_rs (jax.numpy.ndarray): An array of shape [N, 2, 2], where N is the number of 2x2 complex matrices.
+                                          Each 2x2 matrix is represented by its 2x2 elements arranged in a 3D array.
+
+
     """
     initial_value = jnp.eye(2, dtype=jnp.complex128)  # Initialize with the identity matrix of size 2x2. # The identity matrix acts as the multiplicative identity, ensuring that the multiplication starts correctly.
 

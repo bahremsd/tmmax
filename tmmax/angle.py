@@ -76,6 +76,7 @@ def is_propagating_wave(n: Union[float, jnp.ndarray], angle_of_incidence: Union[
         # For p-polarization, return whether the wave is forward-propagating
         return jnp.array([is_forward_p])  # p-polarization output as a single-element array
 
+
 def _compute_layer_angles_single_wl_angle_point(nk_list: jnp.ndarray,
                                                 angle_of_incidence: Union[float, jnp.ndarray],
                                                 wavelength: Union[float, jnp.ndarray],
@@ -159,5 +160,3 @@ def _compute_layer_angles_single_wl_angle_point(nk_list: jnp.ndarray,
 
     # Return the final angles of incidence (theta_array) for each layer, reflecting any necessary flips.
     return theta_array  # Final output: angles of incidence in each layer after applying Snell's law
-
-

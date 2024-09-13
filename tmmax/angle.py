@@ -99,7 +99,26 @@ def _compute_layer_angles_single_wl_angle_point(nk_list: jnp.ndarray,
             - False: s-polarization (perpendicular to the plane of incidence).
             - True: p-polarization (parallel to the plane of incidence).
 
+    Returns:
+        jnp.ndarray: A JAX array containing the calculated angles of incidence for each layer in radians. 
+                     If `angle_of_incidence` is a float, it returns a 1D array where each element represents 
+                     the angle in a specific layer. If `angle_of_incidence` is a 1D array, the return is 2D, 
+                     with each row representing the angles in all layers for a specific initial angle.
 
+    Detailed Description:
+        This function applies Snell's law to calculate the angle of incidence in each layer of a multilayer 
+        thin film structure. Snell's law relates the angles and refractive indices across different media via:
+        
+        sin(theta_i) = (n_0 * sin(theta_0)) / n_i
+        
+        where:
+            - theta_i is the angle of incidence in the i-th layer,
+            - n_0 is the refractive index of the first layer,
+            - theta_0 is the initial angle of incidence,
+            - n_i is the refractive index of the i-th layer.
+            
+        The function also handles situations where the light may not propagate forward (e.g., due to total internal 
+        reflection or evanescent waves) by flipping angles when needed.
     """
 
     # Calculate the sine of the angles in the first layer using Snell's law

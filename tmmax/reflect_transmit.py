@@ -176,14 +176,15 @@ def _calculate_transmittace_from_coeff(t: Union[float, jnp.ndarray],
 
 
 
+    # Check if polarization effect should be considered
     if not polarization:  # If polarization is False
-
+        # Compute transmittance without polarization
         return jnp.abs(t)**2 * (                                        # Square of the magnitude of t
             jnp.real(n_list_last * jnp.cos(last_layer_angle)) /         # Real part of (n_last * cos(last_layer_angle))
             jnp.real(n_list_first * jnp.cos(angle_of_incidence))         # Real part of (n_first * cos(angle_of_incidence))
         )
     else:  # If polarization is True
-
+        # Compute transmittance considering polarization
         return jnp.abs(t)**2 * (                                        # Square of the magnitude of t
             jnp.real(n_list_last * jnp.conj(jnp.cos(last_layer_angle))) / # Real part of (n_last * conjugate(cos(last_layer_angle)))
             jnp.real(n_list_first * jnp.conj(jnp.cos(angle_of_incidence))) # Real part of (n_first * conjugate(cos(angle_of_incidence)))

@@ -65,6 +65,15 @@ def _compute_rt_at_interface_p(carry, concatenated_nk_list_theta):
     for P-polarized light (parallel polarization). It uses the Fresnel equations to calculate these coefficients 
     based on the refractive indices and angles of incidence and refraction for the two layers.
 
+    Args:
+        carry: A tuple (carry_idx, carry_values) where:
+            - carry_idx: The current index that keeps track of the layer.
+            - carry_values: A matrix to store the computed reflection and transmission coefficients.
+        
+        concatenated_nk_list_theta: A tuple (stacked_nk_list, stacked_layer_angles) where:
+            - stacked_nk_list: A list of refractive indices of the two consecutive layers.
+            - stacked_layer_angles: A list of angles of incidence and refraction at the interface between the layers.
+
     """
 
     # Unpack the concatenated data into two variables: refractive indices (nk) and angles (theta)

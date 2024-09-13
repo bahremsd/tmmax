@@ -102,20 +102,45 @@ def _compute_rt_at_interface_p(carry, concatenated_nk_list_theta):
 def _compute_rt_one_wl(nk_list: jnp.ndarray, layer_angles: jnp.ndarray,
                        wavelength: Union[float, jnp.ndarray], polarization: bool) -> jnp.ndarray:
 
-
+    # Initialize the state for `jax.lax.scan`. The first element (0) is a placeholder 
+    # and won't be used. The second element is a 2D array of zeros to hold intermediate 
+    # results, representing the reflectance and transmittance across layers.
     init_state = (0, jnp.zeros((len(nk_list) - 2, 2), dtype=jnp.float32))  # Initial state with an array of zeros
+    # The shape of `jnp.zeros` is (num_layers - 2, 2) because we exclude the first 
+    # and last layers, assuming they are boundary layers.
 
-
-
+    # Stack the refractive indices (`nk_list`) for each adjacent pair of layers.
+    # This creates a new array where each element contains a pair of adjacent refractive indices 
+    # from `nk_list`, which will be used to compute the reflection and transmission at the interface 
+    # between these two layers.
     stacked_nk_list = jnp.stack([nk_list[:-2], nk_list[1:-1]], axis=1)  # Stack the original and shifted inputs for processing in pairs
+    # For example, if `nk_list` is [n1, n2, n3, n4], this will create pairs [(n1, n2), (n2, n3), (n3, n4)].
 
+    # Similarly, stack the angles for adjacent layers.
+    # The same logic applies to `layer_angles` as for `nk_list`. Each pair of adjacent layers 
+    # will have an associated pair of angles.
     stacked_layer_angles = jnp.stack([layer_angles[:-2], layer_angles[1:-1]], axis=1)
+    # This operation aligns the angles with the corresponding refractive indices.
 
+    # Now we need to compute reflectance and transmittance for each interface. 
+    # This can be done using `jax.lax.scan`, which efficiently loops over the stacked pairs 
+    # of refractive indices and angles.
+
+    # If the light is s-polarized (polarization = False), we call the function `_compute_rt_at_interface_s`.
+    # This function calculates the reflection and transmission coefficients specifically for s-polarized light.
     if polarization == False:
         rt_one_wl, _ = jax.lax.scan(_compute_rt_at_interface_s, init_state, (stacked_nk_list, stacked_layer_angles))  # s-polarization case
+        # `jax.lax.scan` applies the function `_compute_rt_at_interface_s` to each pair of adjacent layers 
+        # along with the corresponding angles. It processes this in a loop, accumulating the results.
 
-
+    # If the light is p-polarized (polarization = True), we use `_compute_rt_at_interface_p` instead.
+    # This function handles p-polarized light.
     elif polarization == True:
         rt_one_wl, _ = jax.lax.scan(_compute_rt_at_interface_p, init_state, (stacked_nk_list, stacked_layer_angles))  # p-polarization case
+        # The same process as above but with a function specific to p-polarized light.
 
+    # Finally, return the computed reflectance and transmittance coefficients. 
+    # The result is stored in `rt_one_wl[1]` (the second element of `rt_one_wl`), which corresponds 
+    # to the reflectance and transmittance after all layers have been processed.
     return rt_one_wl[1]  # Return a 1D theta array for each layer
+    # This output is the desired result: the reflectance and transmittance for the given wavelength.

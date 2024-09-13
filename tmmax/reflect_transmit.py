@@ -227,6 +227,11 @@ def _create_phases_ts_rs(_trs: jnp.ndarray, _phases: jnp.ndarray) -> jnp.ndarray
         Args:
             i (int): Index of the element to process.
 
+        Returns:
+            List[float]: A list containing [phase, t, s] where:
+                - phase: The phase value from _phases at index i
+                - t: The first value of the pair in _trs at index i
+                - s: The second value of the pair in _trs at index i
         """
         return [_phases[i], _trs[i][0], _trs[i][1]]  # Return the phase and ts values as a list
 

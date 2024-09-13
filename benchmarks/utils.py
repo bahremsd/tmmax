@@ -35,11 +35,13 @@ def get_nk_values(wl: float, nk_functions: List[Callable[[float], complex]], mat
     return np.array([nk_functions[mat_idx](wl) for mat_idx in material_list])  # Convert the resulting list to a NumPy array.
 
 
-def tmm_coh_tmm_array(polarization: str, 
-                      material_list: List[str], 
-                      thickness_list: Union[np.ndarray, float], 
-                      angle_of_incidences: Union[np.ndarray, float], 
-                      wavelength_arr: Union[np.ndarray, float]) -> Tuple[np.ndarray, np.ndarray]:
+def tmm_coh_tmm_array(
+    polarization: str, 
+    material_list: List[str], 
+    thickness_list: Union[np.ndarray, float], 
+    angle_of_incidences: Union[np.ndarray, float], 
+    wavelength_arr: Union[np.ndarray, float]
+) -> Tuple[np.ndarray, np.ndarray]:
     """
     This function calculates the reflection (R) and transmission (T) for a multilayer thin film stack 
     over arrays of wavelengths and angles of incidence using the coherent Transfer Matrix Method (TMM). 
@@ -94,6 +96,7 @@ def tmm_coh_tmm_array(polarization: str,
 
     # Return the final reflection (R) and transmission (T) arrays for all wavelengths and angles # These are 2D arrays, where each element corresponds to a specific wavelength and angle.
     return R, T
+
 
 def vtmm_tmm_rt_wl_theta(polarization: str, wavelength_arr: Union[np.ndarray, float], 
                          angle_of_incidences: Union[np.ndarray, float], 
@@ -154,6 +157,7 @@ def vtmm_tmm_rt_wl_theta(polarization: str, wavelength_arr: Union[np.ndarray, fl
     
     # Return the reflection and transmission results
     return result  # Return the results of the tmm_rt calculation
+
 
 def generate_material_distribution_indices(N, low=0, high=10):
     """

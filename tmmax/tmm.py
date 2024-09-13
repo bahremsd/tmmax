@@ -41,6 +41,14 @@ def _tmm_single_wl_angle_point(nk_functions: Dict[int, Callable], material_list:
     Computes the reflectance (R) and transmittance (T) of a multi-layer optical film for a given wavelength
     and angle of incidence using the Transfer Matrix Method (TMM).
 
+    Args:
+        nk_functions (Dict[int, Callable]): Dictionary mapping material indices to functions that return 
+                                           the complex refractive index (n + ik) for a given wavelength.
+        material_list (list[int]): List of indices representing the order of materials in the stack.
+        thickness_list (jnp.ndarray): Array of thicknesses for each layer in the stack.
+        wavelength (Union[float, jnp.ndarray]): Wavelength(s) of light in the simulation.
+        angle_of_incidence (Union[float, jnp.ndarray]): Angle of incidence in radians.
+        polarization (bool): True for TM polarization, False for TE polarization.
 
     """
 

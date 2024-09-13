@@ -184,7 +184,11 @@ def generate_material_distribution_indices(N, low=0, high=10):
     return arr
 
 def generate_material_list_with_air(index_array, material_list):
+    """
+    Takes an array of indices and a material list, and generates a list of materials
+    based on the index array, with 'Air' concatenated at the start and end.
 
+    """
     if not all(0 <= idx < len(material_list) for idx in index_array):
         raise ValueError("Index out of bounds for the material list.")
     

@@ -74,4 +74,5 @@ def _compute_rt_at_interface_p(carry, concatenated_nk_list_theta):
 
     carry_values = carry_values.at[carry_idx, :].set(r_t_matrix)  
 
+    carry_idx = carry_idx + 1 
     return (carry_idx, carry_values), None  # Return the updated carry with incremented index and updated r,t values, and None as a placeholder

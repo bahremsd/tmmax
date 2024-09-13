@@ -185,7 +185,8 @@ def _calculate_transmittace_from_coeff(t: Union[float, jnp.ndarray],
         last_layer_angle (complex or jnp.ndarray): The angle in the last layer, can be complex, in radians or array.
         polarization (bool): Indicates if polarization effects should be considered (True) or not (False).
     
-
+    Returns:
+        jnp.ndarray: The calculated transmittance, which takes into account the polarization if specified.
     """
 
     # Check if polarization effect should be considered

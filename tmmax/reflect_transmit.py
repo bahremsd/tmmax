@@ -118,6 +118,9 @@ def _compute_rt_one_wl(nk_list: jnp.ndarray, layer_angles: jnp.ndarray,
         polarization (bool): Boolean flag that determines the polarization state of the light. 
                              If False, s-polarization is used; if True, p-polarization is used.
 
+    Returns:
+        jnp.ndarray: A 1D JAX array representing the reflectance and transmittance 
+                     coefficients at the specified wavelength and polarization.
     """
 
     # Initialize the state for `jax.lax.scan`. The first element (0) is a placeholder 

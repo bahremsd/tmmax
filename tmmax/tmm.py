@@ -46,25 +46,40 @@ def _tmm_single_wl_angle_point(nk_functions: Dict[int, Callable], material_list:
     nk_list = get_nk_values(wavelength)  # Call get_nk_values to get refractive index values for all materials
 
     layer_angles = _compute_layer_angles_single_wl_angle_point(nk_list, angle_of_incidence, wavelength, polarization)
+    # Compute the angles within each layer based on the refractive indices, incidence angle, and wavelength
 
     kz = _compute_kz_single_wl_angle_point(nk_list, layer_angles, wavelength)
+    # Calculate the z-component of the wave vector for each layer
 
     layer_phases = kz * jnp.pad(thickness_list, (1), constant_values=0)
+    # Compute the phase shifts in each layer by multiplying kz by the layer thicknesses
+    # `jnp.pad(thickness_list, (1), constant_values=0)` adds a leading zero to the thickness_list
 
     rt = _compute_rt_one_wl(nk_list=nk_list, layer_angles=layer_angles, wavelength=wavelength, polarization=polarization)
+    # Compute the reflection and transmission matrices for the wavelength
 
     _phases_ts_rs = _create_phases_ts_rs(rt[1:,:], layer_phases[1:-1])
+    # Create a list of phase shift matrices from the transmission and reflection matrices and layer phases
+    # Exclude the first and last reflection matrix, and the first and last phase shift values
 
     tr_matrix = _cascaded_matrix_multiplication(_phases_ts_rs)
+    # Perform matrix multiplication to obtain the cascaded transfer matrix for the entire stack
 
     tr_matrix = (1 / rt[0, 1]) * jnp.dot(jnp.array([[1, rt[0, 0]], [rt[0, 0], 1]]), tr_matrix)
+    # Normalize the transfer matrix and include the boundary conditions
+    # `jnp.dot` multiplies the transfer matrix by the boundary conditions matrix
 
     r = tr_matrix[1, 0] / tr_matrix[0, 0]
     t = 1 / tr_matrix[0, 0]
+    # Calculate the reflectance (r) and transmittance (t) from the transfer matrix
+    # Reflectance is obtained by dividing the (1, 0) element by the (0, 0) element
+    # Transmittance is obtained by taking the reciprocal of the (0, 0) element
 
     R = jnp.abs(r) ** 2
     T = _calculate_transmittace_from_coeff(t, nk_list[0], nk_list[-1], angle_of_incidence, layer_angles[-1], polarization)
-
+    # Compute the reflectance (R) and transmittance (T) using their respective formulas
+    # Reflectance R is the squared magnitude of r
+    # Transmittance T is calculated using a function `_calculate_transmittace_from_coeff`
 
     return R, T
     # Return the reflectance and transmittance values

@@ -62,17 +62,18 @@ def _compute_rt_at_interface_s(carry, concatenated_nk_list_theta):
 def _compute_rt_at_interface_p(carry, concatenated_nk_list_theta):
 
 
+    # Unpack the concatenated data into two variables: refractive indices (nk) and angles (theta)
+    stacked_nk_list, stacked_layer_angles = concatenated_nk_list_theta  # Extract the refractive indices and angles from the input tuple
+    carry_idx, carry_values = carry  # Unpack carry: carry_idx is the current index, carry_values stores r and t coefficients
 
-    stacked_nk_list, stacked_layer_angles = concatenated_nk_list_theta  
-    carry_idx, carry_values = carry 
-
+    # Compute reflection (r) and transmission (t) coefficients at the interface using Fresnel equations for P-polarized light
     r_t_matrix = _fresnel_p(_first_layer_theta = stacked_layer_angles[0],  # Incident angle at the first layer
                               _second_layer_theta = stacked_layer_angles[1],  # Refraction angle at the second layer
                               _first_layer_n = stacked_nk_list[0],  # Refractive index of the first layer
                               _second_layer_n = stacked_nk_list[1])  # Refractive index of the second layer
 
+    # Update carry_values by setting the r,t matrix at the current index (carry_idx)
+    carry_values = carry_values.at[carry_idx, :].set(r_t_matrix)  # Store the computed r,t matrix into the carry_values at the index 'carry_idx'
 
-    carry_values = carry_values.at[carry_idx, :].set(r_t_matrix)  
-
-    carry_idx = carry_idx + 1 
+    carry_idx = carry_idx + 1  # Move to the next index for further iterations
     return (carry_idx, carry_values), None  # Return the updated carry with incremented index and updated r,t values, and None as a placeholder

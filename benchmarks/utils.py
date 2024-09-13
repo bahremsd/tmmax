@@ -154,3 +154,20 @@ def vtmm_tmm_rt_wl_theta(polarization: str, wavelength_arr: Union[np.ndarray, fl
     
     # Return the reflection and transmission results
     return result  # Return the results of the tmm_rt calculation
+
+def generate_material_distribution_indices(N, low=0, high=10):
+
+    if N <= 0:
+        raise ValueError("Array length N must be positive.")
+    
+    arr = np.zeros(N, dtype=int)
+    arr[0] = np.random.randint(low, high)
+    
+    for i in range(1, N):
+        prev = arr[i-1]
+        new_val = prev
+        while new_val == prev:
+            new_val = np.random.randint(low, high)
+        arr[i] = new_val
+
+    return arr

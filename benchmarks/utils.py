@@ -4,6 +4,7 @@ from tmm import coh_tmm
 from vtmm import tmm_rt
 from tmmax.data import interpolate_nk
 
+import tensorflow as tf
 from typing import List, Callable, Tuple, Union
 
 
@@ -149,8 +150,15 @@ def vtmm_tmm_rt_wl_theta(polarization: str, wavelength_arr: Union[np.ndarray, fl
     # Calculate angular frequency (omega) from the wavelength array. Omega = 2 * pi * c / wavelength
     omega = speed_of_light / wavelength_arr * 2 * np.pi  # Convert wavelength to angular frequency
     
+    omega = tf.cast(tf.convert_to_tensor(omega), tf.float64)
     # Calculate the parallel component of the wavevector (kx) from the angle of incidence and wavelength
     kx = np.sin(angle_of_incidences) * 2 * np.pi / wavelength_arr  # Calculate kx from angles and wavelength
+    kx = tf.cast(tf.convert_to_tensor(kx), tf.float64)
+    
+    nk_list = tf.cast(tf.convert_to_tensor(nk_list), tf.float64)
+    
+
+    thickness_list = tf.cast(tf.convert_to_tensor(thickness_list), tf.float64)
     
     # Call the tmm_rt function from the vtmm library with the transformed arguments
     result = tmm_rt(polarization, omega, kx, nk_list, thickness_list)  # Reflection and transmission calculations

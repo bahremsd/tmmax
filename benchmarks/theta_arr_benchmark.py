@@ -8,7 +8,7 @@ from utils import generate_material_distribution_indices
 from utils import generate_material_list_with_air
 from utils import tmm_coh_tmm_array
 from utils import vtmm_tmm_rt_wl_theta
-from tmmax import tmm
+from tmmax.tmm import tmm
 
 # Define the array of lengths for the angle of incidence array
 angle_arr_lengths = np.arange(1, 100, 10, dtype=int)

@@ -3,7 +3,7 @@ jax.config.update('jax_enable_x64', True) # Ensure high precision (64-bit) is en
 import jax.numpy as jnp # Import JAX's version of NumPy for differentiable computations
 from typing import Union, List
 
-from fresnel import _fresnel_s, _fresnel_p
+from .fresnel import _fresnel_s, _fresnel_p
 
 def _compute_rt_at_interface_s(carry, concatenated_nk_list_theta):
     """

@@ -9,7 +9,7 @@ from utils import generate_material_list_with_air
 
 from utils import tmm_coh_tmm_array
 from utils import vtmm_tmm_rt_wl_theta
-from tmmax import tmm
+from tmmax.tmm import tmm
 
 # Array for wavelength array lengths (number of wavelengths), ranging from 1 to 100, step size of 10
 wl_arr_lengths = np.arange(1, 100, 10, dtype=int)

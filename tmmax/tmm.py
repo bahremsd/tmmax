@@ -4,10 +4,10 @@ import jax.numpy as jnp # Import JAX's version of NumPy for differentiable compu
 from jax import vmap 
 from typing import Union, List, Tuple, Text, Dict, Callable
 
-from angle import _compute_layer_angles_single_wl_angle_point
-from cascaded_matmul import _cascaded_matrix_multiplication
-from data import interpolate_nk
-from reflect_transmit import _compute_rt_one_wl, _create_phases_ts_rs, _calculate_transmittace_from_coeff
+from .angle import _compute_layer_angles_single_wl_angle_point
+from .cascaded_matmul import _cascaded_matrix_multiplication
+from .data import interpolate_nk
+from .reflect_transmit import _compute_rt_one_wl, _create_phases_ts_rs, _calculate_transmittace_from_coeff
 
 def _compute_kz_single_wl_angle_point(
     nk_list: jnp.ndarray,           # Array of complex refractive indices for different wavelengths

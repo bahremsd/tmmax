@@ -19,9 +19,6 @@
 
 When compared to other libraries such as `tmm` and `vtmm`, `tmmax` stands out due to its superior performance:
 
-- **TMM**: Traditional TMM implementations often lack vectorization and JIT compilation, resulting in slower computation times.
-- **VTMM**: While VTMM provides vectorized operations, it may not leverage GPU/TPU acceleration as effectively as `tmmax`.
-- **tmmax**: With JAX's advanced features, `tmmax` offers a significant speed advantage and supports high-performance computing on modern hardware.
 
 ## **Installation**
 

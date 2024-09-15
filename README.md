@@ -1,7 +1,3 @@
-# tmmax
-
-![image](docs/logo/logo_tmmax.png)
-
 # **tmmax: High-Performance Transfer Matrix Method with JAX**
 
 

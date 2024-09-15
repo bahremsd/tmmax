@@ -42,4 +42,8 @@ setup(
     entry_points={
         "console_scripts": ["tmmax = tmmax.__main__:main"]
     },
+    include_package_data=True,
+    package_data={
+        'tmmax': ['nk_data/*.csv'],
+    },
 )

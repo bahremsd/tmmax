@@ -9,6 +9,8 @@ import pandas as pd # Importing pandas to handle CSV data
 from typing import Union, Callable # Type hints for function signatures
 import warnings # Importing the warnings module to handle warnings in the code
 
+from . import nk_data_dir
+
 @lru_cache(maxsize=32)
 def load_nk_data(material_name: str = '') -> Union[jnp.ndarray, None]:
     """
@@ -43,7 +45,7 @@ def load_nk_data(material_name: str = '') -> Union[jnp.ndarray, None]:
         raise ValueError("Material name cannot be an empty string.")  # Raise an error if no material is provided
 
     # Construct the file path and check if the file exists
-    file_path = os.getcwd() + "/" + os.path.join('nk_data', f'{material_name}.csv')  # Create the full path to the file
+    file_path = os.path.join(nk_data_dir, f'{material_name}.csv')  # Create the full path to the file
     if not os.path.exists(file_path):  
         # Raise an error if the file for the material does not exist
         raise FileNotFoundError(f"No data found for material '{material_name}' in 'nk_data/' folder (library database).")

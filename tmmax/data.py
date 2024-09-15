@@ -193,7 +193,7 @@ def add_material_to_nk_database(wavelength_arr, refractive_index_arr, extinction
 
     # Construct the file path
     # Create a file path for saving the data based on the material name
-    path = os.path.join('nk_data', f'{material_name}.csv')
+    path = os.path.join(nk_data_dir, f'{material_name}.csv')
     
     # Save the file with a header
     # Convert the jax.numpy array to a numpy array for file saving and write to CSV

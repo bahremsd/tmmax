@@ -3,12 +3,15 @@ import jax.numpy as jnp
 import timeit
 import matplotlib.pyplot as plt  # Importing matplotlib for plotting
 
+import os
+os.environ["JAX_PLATFORM_NAME"] = "cpu"
+
 # Importing utility functions for material index generation and TMM methods
 from utils import generate_material_distribution_indices
 from utils import generate_material_list_with_air
 from utils import tmm_coh_tmm_array
 from utils import vtmm_tmm_rt_wl_theta
-from tmmax import tmm  # Importing the TMM function from tmmax module
+from tmmax.tmm import tmm  # Importing the TMM function from tmmax module
 
 # Number of layers to test from 2 to 50 (inclusive), using integer values
 number_of_layers = np.arange(2, 51, dtype=int)
@@ -26,7 +29,7 @@ polarization = "s"
 angle_of_incidences = np.linspace(0, np.pi/2, 20)
 
 # Wavelength array from 500 nm to 1000 nm, linearly spaced with 20 points
-wavelength_arr = jnp.linspace(500e-9, 1000e-9, 20)
+wavelength_arr = np.linspace(500e-9, 1000e-9, 20)
 
 # Lists to store execution times for each method
 time_tmm = []

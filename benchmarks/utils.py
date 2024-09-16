@@ -1,10 +1,8 @@
 import numpy as np
 
 from tmm import coh_tmm
-from vtmm import tmm_rt
 from tmmax.data import interpolate_nk
 
-import tensorflow as tf
 from typing import List, Callable, Tuple, Union
 
 
@@ -97,75 +95,6 @@ def tmm_coh_tmm_array(
 
     # Return the final reflection (R) and transmission (T) arrays for all wavelengths and angles # These are 2D arrays, where each element corresponds to a specific wavelength and angle.
     return R, T
-
-
-def vtmm_tmm_rt_wl_theta(polarization: str, wavelength_arr: Union[np.ndarray, float], 
-                         angle_of_incidences: Union[np.ndarray, float], 
-                         material_list: List[str], thickness_list: Union[np.ndarray, float]) -> Tuple[np.ndarray, np.ndarray]:
-    """
-    The main goal of this function is to convert arguments for the `tmm_rt` function from the `vtmm` library to a format 
-    compatible with arrays of wavelengths and angles of incidence. The `vtmm` library works with angular frequency (omega) and 
-    parallel wavevector (kx), while this function accepts arrays of wavelengths and angles of incidence, which it 
-    converts to omega and kx, respectively.
-
-    This function essentially serves as a bridge between the two formats, allowing the `tmm_rt` function to work 
-    with data in the form of wavelength and angle of incidence arrays. It also retrieves the refractive index (n) 
-    and extinction coefficient (k) values for the specified materials and wavelengths.
-
-    Args:
-        polarization (str): Polarization of the incident light. Either "s" (TE) or "p" (TM). 
-                            Determines how the electric field is oriented with respect to the plane of incidence.
-        material_list (List[str]): List of material names for each layer in the system. 
-                                   These names are mapped to numerical identifiers to be used in the calculation.
-        thickness_list (Union[np.ndarray, float]): Array or float of layer thicknesses in nanometers. 
-                                                  Each element corresponds to a layer in the system.
-        angle_of_incidences (Union[np.ndarray, float]): Array or float of angles of incidence in degrees. 
-                                                       Each angle defines the direction of incoming light relative to the surface normal.
-        wavelength_arr (Union[np.ndarray, float]): Array or float of wavelengths in nanometers. 
-                                                  Defines the wavelengths of the incident light.
-        
-    Returns:
-        Tuple[np.ndarray, np.ndarray]: Two 2D arrays representing the reflection (R) and transmission (T) 
-                                       coefficients, each of shape (len(wavelength_arr), len(angle_of_incidences)).
-                                       The reflection and transmission values are calculated for each combination 
-                                       of wavelength and angle of incidence.
-    """
-    
-    # Create a unique set of materials from the input material list to avoid duplicates
-    material_set = list(set(material_list))  # Convert material list to set for unique materials
-    
-    # Create an enumeration mapping of materials to integers for easier indexing in future calculations
-    material_enum = {material: i for i, material in enumerate(material_set)}  # Material to index dictionary
-    
-    # Replace material names in the material list with their corresponding numerical indices
-    material_list = [int(material_enum[material]) for material in material_list]  # List of material indices
-    
-    # Retrieve interpolating functions for refractive index and extinction coefficient for each material
-    nk_funkcs = {i: interpolate_nk(material) for i, material in enumerate(material_set)}  # Functions for n and k values
-    
-    # Get the refractive index and extinction coefficient values for the first wavelength in the array
-    # Using nk_funkcs, this retrieves n and k values for all materials at the specified wavelength
-    nk_list = get_nk_values(wavelength_arr[0], nk_funkcs, material_list)  # n and k values for the materials
-    
-    # Calculate angular frequency (omega) from the wavelength array. Omega = 2 * pi * c / wavelength
-    omega = speed_of_light / wavelength_arr * 2 * np.pi  # Convert wavelength to angular frequency
-    
-    omega = tf.cast(tf.convert_to_tensor(omega), tf.float64)
-    # Calculate the parallel component of the wavevector (kx) from the angle of incidence and wavelength
-    kx = np.sin(angle_of_incidences) * 2 * np.pi / wavelength_arr  # Calculate kx from angles and wavelength
-    kx = tf.cast(tf.convert_to_tensor(kx), tf.float64)
-    
-    nk_list = tf.cast(tf.convert_to_tensor(nk_list), tf.float64)
-    
-
-    thickness_list = tf.cast(tf.convert_to_tensor(thickness_list), tf.float64)
-    
-    # Call the tmm_rt function from the vtmm library with the transformed arguments
-    result = tmm_rt(polarization, omega, kx, nk_list, thickness_list)  # Reflection and transmission calculations
-    
-    # Return the reflection and transmission results
-    return result  # Return the results of the tmm_rt calculation
-
 
 def generate_material_distribution_indices(N, low=0, high=10):
     """

@@ -10,7 +10,6 @@ os.environ["JAX_PLATFORM_NAME"] = "cpu"
 from utils import generate_material_distribution_indices
 from utils import generate_material_list_with_air
 from utils import tmm_coh_tmm_array
-from utils import vtmm_tmm_rt_wl_theta
 from tmmax.tmm import tmm  # Importing the TMM function from tmmax module
 
 # Number of layers to test from 2 to 50 (inclusive), using integer values
@@ -33,7 +32,6 @@ wavelength_arr = np.linspace(500e-9, 1000e-9, 20)
 
 # Lists to store execution times for each method
 time_tmm = []
-time_vtmm = []
 time_tmmax = []
 
 # Loop through different numbers of layers (from 2 to 50)
@@ -55,13 +53,6 @@ for N in number_of_layers:
                           number=timeit_repetition)
     time_tmm.append(t_tmm)
 
-    # Measure execution time for the VTMM method and append to the time list
-    t_vtmm = timeit.timeit(lambda: vtmm_tmm_rt_wl_theta(polarization, wavelength_arr, 
-                                                        angle_of_incidences, material_list, 
-                                                        thickness_list), 
-                           number=timeit_repetition)
-    time_vtmm.append(t_vtmm)
-
     # Measure execution time for the TMMax method and append to the time list
     t_tmmax = timeit.timeit(lambda: tmm(material_list=material_list, thickness_list=thickness_list, 
                                         wavelength_arr=wavelength_arr, angle_of_incidences=angle_of_incidences, 
@@ -71,7 +62,6 @@ for N in number_of_layers:
 
 # Save the time measurements for each method into .npy files
 np.save("time_of_tmm_layersize_exp.npy", time_tmm)
-np.save("time_of_vtmm_layersize_exp.npy", time_vtmm)
 np.save("time_of_tmmax_layersize_exp.npy", time_tmmax)
 
 # Plotting the execution times for each method with respect to the number of layers
@@ -79,8 +69,7 @@ plt.figure(figsize=(10, 6))
 
 # Plot times for each method
 plt.plot(number_of_layers, time_tmm, label="TMM Time", marker="o")
-plt.plot(number_of_layers, time_vtmm, label="VTMM Time", marker="s")
-plt.plot(number_of_layers, time_tmmax, label="TMMax Time", marker="^")
+plt.plot(number_of_layers, time_tmmax, label="TMMax Time", marker="s")
 
 # Adding labels and title
 plt.xlabel("Number of Layers")

@@ -7,7 +7,6 @@ import matplotlib.pyplot as plt
 from utils import generate_material_distribution_indices
 from utils import generate_material_list_with_air
 from utils import tmm_coh_tmm_array
-from utils import vtmm_tmm_rt_wl_theta
 from tmmax.tmm import tmm
 
 # Define the array of lengths for the angle of incidence array
@@ -38,12 +37,11 @@ thickness_list = np.random.uniform(100, 500, 5) * 1e-9
 # Save the thickness list to a numpy file
 np.save("thickness_list_with_layer_num_5_angle_arr_exp.npy", thickness_list)
 
-# Initialize lists to store execution times for different TMM methods
+# Initialize lists to store execution times for different tmm methods
 time_tmm = []
-time_vtmm = []
 time_tmmax = []
 
-# Loop through each angle array length and time the TMM computations
+# Loop through each angle array length and time the tmm computations
 for N in angle_arr_lengths:
     # Generate angle of incidences array with N points between 0 and pi/2
     angle_of_incidences = np.linspace(0, np.pi/2, N)
@@ -51,12 +49,6 @@ for N in angle_arr_lengths:
     # Time the coherent TMM array calculation and store the result
     t_tmm = timeit.timeit(
         lambda: tmm_coh_tmm_array(polarization, material_list, thickness_list, angle_of_incidences, wavelength_arr), 
-        number=timeit_repetition
-    )
-    
-    # Time the vtmm_tmm_rt_wl_theta calculation and store the result
-    t_vtmm = timeit.timeit(
-        lambda: vtmm_tmm_rt_wl_theta(polarization, wavelength_arr, angle_of_incidences, material_list, thickness_list), 
         number=timeit_repetition
     )
     
@@ -68,28 +60,24 @@ for N in angle_arr_lengths:
 
     # Append the times to respective lists
     time_tmm.append(t_tmm)
-    time_vtmm.append(t_vtmm)
     time_tmmax.append(t_tmmax)
 
 # Save the execution times to numpy files for further analysis
 np.save("time_of_tmm_angle_arr_exp.npy", time_tmm)
-np.save("time_of_vtmm_angle_arr_exp.npy", time_vtmm)
 np.save("time_of_tmmax_angle_arr_exp.npy", time_tmmax)
 
 # ================== PLOTTING RESULTS ==================
 
 # Convert the lists to numpy arrays for easier manipulation
 time_tmm = np.array(time_tmm)
-time_vtmm = np.array(time_vtmm)
 time_tmmax = np.array(time_tmmax)
 
 # Plot the execution times against the angle array lengths
 plt.figure(figsize=(10, 6))
 
 # Plot each method's timing with different markers
-plt.plot(angle_arr_lengths, time_tmm, 'o-', label="TMM Coherent", color="blue")
-plt.plot(angle_arr_lengths, time_vtmm, 's-', label="VTMM", color="green")
-plt.plot(angle_arr_lengths, time_tmmax, '^-', label="TMMax", color="red")
+plt.plot(angle_arr_lengths, time_tmm, 'o-', label="tmm", color="crimson")
+plt.plot(angle_arr_lengths, time_tmmax, '^-', label="tmmax", color="navy")
 
 # Labeling the plot
 plt.xlabel("Angle of Incidence Array Length", fontsize=14)

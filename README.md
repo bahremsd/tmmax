@@ -27,7 +27,7 @@ The benchmark comparison demonstrates a significant computational efficiency gai
 ![image](benchmarks/wavelength_arr_experiment/execution_time_vs_wavelength_array_length.png)
 
 
-![image](benchmarks/angl_arr_experiment/tmm_execution_time_vs_angle_length.png)
+![image](benchmarks/angle_arr_experiment/tmm_execution_time_vs_angle_length.png)
 
 
 ## **Installation**

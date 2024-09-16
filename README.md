@@ -17,8 +17,11 @@
 
 ## **Benchmarks**
 
-When compared to other libraries such as `tmm` and `vtmm`, `tmmax` stands out due to its superior performance:
 
+![image](benchmarks/layer_size_experiment/execution_time_vs_layers.png)
+
+
+The benchmark comparison demonstrates a significant computational efficiency gain when using the `tmmax` package over the widely used `tmm` library, especially for simulations involving a large number of layers. As the number of layers increases, the execution time for `tmm` scales linearly, demonstrating a performance bottleneck, while `tmmax` exhibits near-constant execution time beyond a small initial rise, suggesting superior handling of computational complexity. (Despite the increasing number of layers, both the wavelength array and theta array lengths were kept constant at 20, ensuring the results purely reflect the scaling behavior with respect to the number of layers.)
 
 ## **Installation**
 

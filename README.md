@@ -80,7 +80,7 @@ R_p, T_p = tmm(material_list = material_list,
 ```
 
 <div align="center">
-  <img src="https://github.com/bahremsd/tmmax/blob/master/docs/source/_static/quickstart_example.png" alt="usage_example">
+  <img src="docs/source/_static/quickstart_example.png" alt="usage_example">
 </div>
 
 For cases where an incoherent layer is introduced within the stack, the simulation should include averaging effects of "thick" layers. In tmmax, incoherent layers are denoted by `1`, while coherent layers remain as `0`. The following example demonstrates the configuration of the same stack with incoherent layers:

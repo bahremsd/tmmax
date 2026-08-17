@@ -33,8 +33,8 @@ Ways You Can Contribute
       python -m venv .venv
       source .venv/bin/activate     # On Windows use: .venv\\Scripts\\activate
 
-      # 3. Install the project with development dependencies
-      pip install -e ".[dev]"
+      # 3. Install the project with development and test dependencies
+      pip install -e ".[dev,test]"
 
 4. **Improving Documentation**  
    Well-written documentation is crucial for the adoption and usability of TMMax. You can help by:

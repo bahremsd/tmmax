@@ -22,7 +22,7 @@
     <li><a href="#usage">Usage</a></li>
     <li><a href="#database">Database</a></li>
     <li><a href="#benchmarks">Benchmarks</a></li>
-    <li><a href="#installation">Installation</a></li>
+    <li><a href="#minimum-requirements-and-installation">Installation</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#credits">Credits</a></li>
     <li><a href="#contact-and-support">Contact and Support</a></li>

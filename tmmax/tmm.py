@@ -449,10 +449,10 @@ def vectorized_coh_tmm(data: ArrayLike,
 
     Returns:
     --------
-    result : Array
-        A multi-dimensional array containing the computed results of the TMM calculations 
-        for all specified wavelengths and angles of incidence. The dimensions of this 
-        array correspond to the vectorized axes (wavelength and angle of incidence).
+        Tuple[jnp.ndarray, jnp.ndarray]: A tuple containing two arrays: 
+            - The first array represents the reflection coefficients.
+            - The second array represents the transmission coefficients.
+            Both arrays have indices corresponding to angle of incidence (first index) and wavelength (second index).
     """
 
     # Use `vmap` to vectorize `tmm_coh_single_wl_angle_point` over wavelength and angle of incidence.
@@ -537,10 +537,10 @@ def vectorized_incoh_tmm(data: ArrayLike,
 
     Returns:
     --------
-    result : Array
-        A multi-dimensional array containing the computed results of the TMM calculations 
-        for all specified wavelengths and angles of incidence. The dimensions of this 
-        array correspond to the vectorized axes (wavelength and angle of incidence).
+        Tuple[jnp.ndarray, jnp.ndarray]: A tuple containing two arrays: 
+            - The first array represents the reflection coefficients.
+            - The second array represents the transmission coefficients.
+            Both arrays have indices corresponding to angle of incidence (first index) and wavelength (second index).
     """
 
     # Use `vmap` to vectorize `tmm_incoh_single_wl_angle_point` over wavelength and angle of incidence.
@@ -595,9 +595,9 @@ def tmm_coh(material_list: List[str],
     Returns:
     --------
         Tuple[jnp.ndarray, jnp.ndarray]: A tuple of two JAX arrays:
-            - The first array contains the reflection for the given configuration.
-            - The second array contains the transmission for the given configuration.
-            These results describe the amount of light transmitted and reflected at each wavelength and angle of incidence.
+            - The first array represents the reflection coefficients.
+            - The second array represents the transmission coefficients.
+            Both arrays have indices corresponding to angle of incidence (first index) and wavelength (second index).
     """
     
     # Convert the material list into a set and a material distribution array
@@ -649,8 +649,9 @@ def tmm(material_list: List[str],
     Returns:
     ----------
         Tuple[ArrayLike, ArrayLike]: A tuple containing two arrays: 
-            - The first array represents the transmission coefficients.
-            - The second array represents the reflection coefficients.
+            - The first array represents the reflection coefficients.
+            - The second array represents the transmission coefficients.
+            Both arrays have indices corresponding to angle of incidence (first index) and wavelength (second index).
     """
 
     # -------------------------------------------------------------------------
@@ -717,7 +718,7 @@ def tmm(material_list: List[str],
     if coherency_list == None:
         # If the multilayer structure is fully coherent, use the vectorized coherent TMM function.
         result = vectorized_coh_tmm(data, material_distribution, thickness_list, wavelength_arr, angle_of_incidences, polarization)
-        # Return the result (tuple of transmission and reflection coefficients).
+        # Return the result (tuple of reflection and transmission coefficients).
         return result
 
     # Identify coherent and incoherent layer indices for the forward direction.
@@ -730,7 +731,7 @@ def tmm(material_list: List[str],
     if (len(incoherent_indices_forward) == 2):
         # If the multilayer structure is fully coherent, use the vectorized coherent TMM function.
         result = vectorized_coh_tmm(data, material_distribution, thickness_list, wavelength_arr, angle_of_incidences, polarization)
-        # Return the result (tuple of transmission and reflection coefficients).
+        # Return the result (tuple of reflection and transmission coefficients).
         return result
     else:
         # If the multilayer structure is not fully coherent, use the vectorized incoherent TMM function.
@@ -745,5 +746,5 @@ def tmm(material_list: List[str],
                                       wavelengths = wavelength_arr,
                                       angle_of_incidences = angle_of_incidences,
                                       polarization = polarization)
-        # Return the result (tuple of transmission and reflection coefficients).
+        # Return the result (tuple of reflection and transmission coefficients).
         return result

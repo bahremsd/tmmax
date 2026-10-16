@@ -116,10 +116,10 @@ Finally, we visualize the computed reflection and transmission spectra. The plot
     i = 0
     for ax in grid:
         if i == 0:
-            im = ax.imshow(result_s[0]*100, cmap='Spectral', aspect=200/70,extent = [500, 700, 0, 70])
+            im = ax.imshow(R_s*100, cmap='Spectral', aspect=200/70,extent = [500, 700, 0, 70])
             ax.set_title("s-polarization")
         if i ==1:
-            im = ax.imshow(result_p[0]*100, cmap='Spectral', aspect=200/70,extent = [500, 700, 0, 70])
+            im = ax.imshow(R_p*100, cmap='Spectral', aspect=200/70,extent = [500, 700, 0, 70])
             ax.set_title("p-polarization")
         ax.set_xlabel("Wavelength (nm)")
         ax.set_ylabel("Incident angle ($^o$)")
@@ -162,10 +162,10 @@ Finally, we visualize the computed reflection and transmission spectra. The plot
     i = 0
     for ax in grid:
         if i == 0:
-            im = ax.imshow(result_s[1]*100, cmap='Spectral', aspect=200/70,extent = [500, 700, 0, 70])
+            im = ax.imshow(T_s*100, cmap='Spectral', aspect=200/70,extent = [500, 700, 0, 70])
             ax.set_title("s-polarization")
         if i ==1:
-            im = ax.imshow(result_p[1]*100, cmap='Spectral', aspect=200/70,extent = [500, 700, 0, 70])
+            im = ax.imshow(T_p*100, cmap='Spectral', aspect=200/70,extent = [500, 700, 0, 70])
             ax.set_title("p-polarization")
         ax.set_xlabel("Wavelength (nm)")
         ax.set_ylabel("Incident angle ($^o$)")
